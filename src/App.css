@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+
+* {
+  font-family: 'Sora', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  padding: 13px;
+  align-items: center;
+}
+.popup-element{
+  display:inline-flex;
+  flex-direction: column; 
+  align-items: flex-start;
+}
+.popup-footer{
+  margin-top: 20px;
+  align-content: center;
+  
+}
+.titleCloseBtn{
+  position: relative;
+}
+#close-btn:hover{
+  background-color: #e3e5e6;
+  
+}
+#close-btn {
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: none;
+  color:rgb(11, 12, 11);
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.popup-footer .btn.btn-primary{
+  margin-right: 10px;
+  margin-left: 40px;
+  width: 90px;
+  }
+  .popup-footer .btn.btn-danger{
+    width: 90px;
+  }
+.popup-content {
+  background-color: white;
+  padding-top: 30px;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-bottom: 45px;
+  height: auto;
+  width: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+}
+
+.popup-content h2 {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center
+}
+
+
+.endpoint-list-links a,button {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+  /* border: 1px solid black; */
+  padding: 2px;
+  margin-bottom: 2px;
+  /* display: block; 
+  width: 100%;  */
+  color: black;
+}
+
+
+.endpoint-link h6,a{
+  display: inline;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.endpoint-link a{
+  text-decoration: none;
+}
+.endpoint-list-links{
+  border-bottom: 1px solid black;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.endpoint-method {
+  border: 1px solid rgb(61, 42, 208);
+  height: 19px;
+  width: 58px;
+  background-color: rgba(78, 124, 243, 0.791);
+  margin-right:20px ;
+  margin-left: 10px;
+  padding-bottom: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.endpoints {
+  font-size: small;
+  text-align: left;
+  display: block;
+  padding: 10px;
+  border: 1px solid black;
+  margin: 10px 0;
+  text-decoration: none;
+  color: black;
+}
+
+.info-button {
+  float: right;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.table {
+  margin: 30px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+.table td {
+  font-size: 14px;
+}
+
+
+.table thead th {
+  background-color: #343a40;
+  color: #fff;
+  font-weight: bold;
+}
+
+.table tbody td,
+.table thead th {
+  border: 2px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background-color: #d9edf7;
+}
+
+.btn {
+  background-color: #28a745;
+  color: #fff;
+  border-color: #28a745;
+}
+
+.btn:hover {
+  background-color: #218838;
+  color: #fff;
+  border-color: #1e7e34;
+}
+.table .btn-group {
+  margin: 2px;
+  display: inline-block;
+}
+
+
+/* .table-background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(200, 200, 200);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container {
+  width: 500px;
+  height: 500px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.table-container .title {
+  display: inline-block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.titleCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.titleCloseBtn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.table-container .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.table-container .footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container .footer button {
+  width: 150px;
+  height: 45px;
+  margin: 10px;
+  border: none;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#closeBtn {
+  background-color: crimson;
+} */
+
