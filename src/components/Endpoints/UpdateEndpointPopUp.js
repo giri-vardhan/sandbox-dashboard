@@ -54,8 +54,8 @@ const UpdateEndpointPopUp = ({ onClose, record }) => {
       endpoint:endpoint,
       method:method,
       file_path:filePath,
-      description:description
-      
+      description:description,
+      active:Number(isActive)
     }
     try {
       const response = await fetch(`http://localhost:9002/v1/endpoint/${record.id}`, {
@@ -105,6 +105,17 @@ console.log(isActive)
                     {/* <DropDownButtonComponent items={items} select={handleMethodChange} iconCss='ddb-icons e-folder' cssClass='e-vertical' iconPosition='Top'>Move</DropDownButtonComponent> */}
                   </label>
                   <br/>
+                  <div class="reponse-content-type">
+                    <div>
+                      <label data-sw-translateGET for="rct0.123">Method: </label>
+                        <select name="responseContentType" id="rct0.123">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                     </div>
+                  </div>
                   <label>
                     File Path:
                     <input value={filePath} onChange={handleFilePathChange} />

@@ -140,14 +140,28 @@
   text-decoration: none;
 }
 
+.copy-btn2 {
+  position:relative;
+  /* outline: none;
+  background: none; */
+  margin-top: 7px;
+  margin-bottom: 0px;
+  float: right;
+  bottom: 0px;
+  border: none;
+}
+
 .table {
   margin: 30px;
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #fff;
 }
+.table th {
+  font-size: 13px;
+}
 .table td {
-  font-size: 14px;
+  font-size: 11px;
 }
 
 

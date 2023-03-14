@@ -33,7 +33,7 @@ const UpdateStatusCodePopUp = ({ onClose, record }) =>  {
       status_code:parseInt(statusCode),
       status_code_identifier:identifier,
       description:description,
-      response_body:responseBody
+      response_body:JSON.parse(responseBody)
     }
     console.log(requestBody)
     try {

@@ -51,15 +51,14 @@ const EndpointTable = forwardRef((props,ref) => {
       <ReactBootStrap.Table striped bordered hover size="sm" className="table table-bordered">
         <thead className="bg-dark text-white">
           <tr>
-            <th className='text-nowrap'>Id</th>
-            <th className='text-nowrap'>Endpoint</th>
+            
+            <th className='text-nowrap'>Name</th>
             <th className='text-nowrap'>Method</th>
             <th className='text-nowrap'>Active </th>
             <th className='text-nowrap'>Description</th>
             <th className='text-nowrap'>File Path</th>
-            <th>created_at</th>
-            <th>updated_at</th>
-            <th>deleted_at</th>
+            <th>Created At</th>
+            <th>Updated At</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -81,7 +80,6 @@ const EndpointTable = forwardRef((props,ref) => {
 
           {
             <tr key={record.id}>
-              <td className='text-nowrap'>{record.id}</td>
               <td className='text-nowrap'>{record.endpoint}</td>
               <td className='text-nowrap'>{record.method}</td>
               <td className='text-nowrap'>{record.active ? record.active.Bool.toString() : ''}</td>
@@ -89,7 +87,7 @@ const EndpointTable = forwardRef((props,ref) => {
               <td className='text-nowrap'>{record.file_path ? record.file_path.String.toString() : ''}</td>
               <td>{record.created_at ? record.created_at.toString() : ''}</td>
               <td>{record.updated_at ? record.updated_at.toString() : ''}</td>
-              <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td>
+              {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
               <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td>
               {modal && <UpdateEndpointPopUp  onClose={toggleModal} record={record} />}
             </tr>

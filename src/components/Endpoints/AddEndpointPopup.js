@@ -23,13 +23,13 @@ const items = [
     label: "DELETE"
   }
 ];
-const Popup = ({ onClose }) => {
-  const [token, setToken] = useState('');
+const AddEndpointPopup = ({ onClose }) => {
+  
   const [description, setDescription] = useState('');
   const [validation,validationChange]=useState(false);
-  const [endpoint,setEndpoint]=useState('')
-  const [method,setMethod]=useState('')
-  const [filePath,setFilePath]=useState('')
+  const [endpoint,setEndpoint]=useState('');
+  const [method,setMethod]=useState('');
+  const [filePath,setFilePath]=useState('');
   const [http,setHttp]=useState(false);
 
   const handleFilePathChange=(event)=>{
@@ -41,9 +41,6 @@ const Popup = ({ onClose }) => {
 
   const handleEndpointChange=(event)=>{
     setEndpoint(event.target.value)
-  };
-  const handleTokenChange = (event) => {
-    setToken(event.target.value);
   };
 
   const handleValidationChange = (event) =>{
@@ -60,7 +57,7 @@ const Popup = ({ onClose }) => {
       endpoint:endpoint,
       method:method,
       description:description,
-      file_path:filePath
+      file_path:filePath,
     }
     try {
       const response = await fetch('http://localhost:9002/v1/endpoint', {
@@ -88,7 +85,7 @@ const Popup = ({ onClose }) => {
   return (
     <div className="popup-background">
     <div className="popup-container">
-      <div className="popup-content" >
+      <div className="popup-content">
       <div className="titleCloseBtn">
           <button onClick={onClose} id="close-btn">
             X
@@ -96,11 +93,6 @@ const Popup = ({ onClose }) => {
         </div>
         <h2>Add Endpoint</h2>
         <form onSubmit={handleSubmit} className="popup-element">
-          <label>
-            Token:
-            <input type="text" value={token}  onChange={handleTokenChange}  />
-          </label>
-          <br />
           <label>
             Endpoint:
             <input required type="text" value={endpoint} onChange={handleEndpointChange}/>
@@ -113,6 +105,17 @@ const Popup = ({ onClose }) => {
             {/* <DropDownButtonComponent items={items} select={handleMethodChange} iconCss='ddb-icons e-folder' cssClass='e-vertical' iconPosition='Top'>Move</DropDownButtonComponent> */}
           </label>
           <br/>
+          <div class="reponse-content-type">
+            <div>
+                <label data-sw-translateget htmlFor="rct0.123">Method: </label>
+                <select name="responseContentType" id="rct0.123">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+          </div>
           <label>
             File Path:
             <input required type="text" value={filePath} onChange={handleFilePathChange}/>
@@ -138,4 +141,4 @@ const Popup = ({ onClose }) => {
   );
 };
 
-export default Popup;
+export default AddEndpointPopup;

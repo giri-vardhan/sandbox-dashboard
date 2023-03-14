@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Popup from './Popup';
+import Popup from './AddEndpointPopup';
 import TablePopup from './Table';
 import axios from 'axios';
 import StatusCodeTable from './StatusCodeTable';

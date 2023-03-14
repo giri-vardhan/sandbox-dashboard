@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import copyIcon from '../icons/copy.png';
 import * as ReactBootStrap from 'react-bootstrap';
 import UpdateStatusCodePopUp from './UpdateStatusCodePopUp';
 import DeleteStatusCodePopUp from './DeleteStatusCodePopUp';
@@ -59,37 +60,37 @@ const StatusCodeTable = ({record}) => {
     //   const filteredData = results.filter(item => item.endpoint_id === record);
     //   console.log(filteredData);
       console.log(results);
-
+console.log(record[0].deleted_at)
     return (
         <div className="table-responsive">
           <ReactBootStrap.Table striped bordered hover size="sm" className="table table-sm table-bordered">
           <thead className="bg-dark text-white">
             <tr>
-              <th className='text-nowrap'>Id</th>
               <th className='text-nowrap'>Status Code</th>
               <th className='text-nowrap'>Description</th>
-              <th className='text-nowrap'>Endpoint Id</th>
               <th className='text-nowrap'>Response_body</th>
-              <th className='text-nowrap'>Status Code Identifier</th>
+              <th className='text-nowrap'>Name</th>
               <th className='text-nowrap'>Created At</th>
               <th className='text-nowrap'>Updated At</th>
-              <th className='text-nowrap'>Deleted At</th>
               <th className='text-nowrap'>Action</th>
             </tr>
           </thead>
           <tbody>
           
-            {record.map(item => (
+            {record.map((item) => (
+              item.deleted_at.Valid === false && (
               <tr key={item.id}>
-                <td className='text-nowrap'>{item.id}</td>
                 <td className='text-nowrap'>{item.status_code}</td>
                 <td >{item.description}</td>
-                <td className='text-nowrap'>{item.endpoint_id}</td>
-                <td >{JSON.stringify(item.response_body)}</td>
-                <td >{item.status_code_identifier}</td>
+                <td id='copy-btn1'>{JSON.stringify(item.response_body) }
+                <div className='copy-btn-div'>
+                <button className="copy-btn2" onClick={() => {
+                  navigator.clipboard.writeText(JSON.stringify(item.response_body));}}>
+                  <img src={copyIcon} alt="copy" border="0" /> 
+                </button></div></td>
+                <td className='text-nowrap'>{item.status_code_identifier}</td>
                 <td >{item.created_at ? item.created_at.toString() : ''}</td>
                 <td >{item.updated_at ? item.updated_at.toString() : ''}</td>
-                <td >{item.deleted_at ? item.deleted_at.Time.toString() : ''}</td>
                 <td >
                   <div className='btn-group'>
                     <ReactBootStrap.Button variant="primary" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}><BsPencilSquare />{" "}</ReactBootStrap.Button>
@@ -101,7 +102,7 @@ const StatusCodeTable = ({record}) => {
                 {entry && modalDelete && <DeleteStatusCodePopUp  onClose={toggleModalDelete} record={entry.id} />}
 
               </tr>
-            ))}
+        )))}
             
           </tbody>
      
