@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import copyIcon from '../icons/copy.png';
+import editIcon from '../icons/edit.png';
+import deleteIcon from '../icons/delete.png';
+
 import * as ReactBootStrap from 'react-bootstrap';
 import UpdateStatusCodePopUp from './UpdateStatusCodePopUp';
 import DeleteStatusCodePopUp from './DeleteStatusCodePopUp';
@@ -82,7 +85,7 @@ console.log(record[0].deleted_at)
               <tr key={item.id}>
                 <td className='text-nowrap'>{item.status_code}</td>
                 <td >{item.description}</td>
-                <td id='copy-btn1'>{JSON.stringify(item.response_body) }
+                <td  id='copy-btn1'>{JSON.stringify(item.response_body) }
                 <div className='copy-btn-div'>
                 <button className="copy-btn2" onClick={() => {
                   navigator.clipboard.writeText(JSON.stringify(item.response_body));}}>
@@ -91,11 +94,23 @@ console.log(record[0].deleted_at)
                 <td className='text-nowrap'>{item.status_code_identifier}</td>
                 <td >{item.created_at ? item.created_at.toString() : ''}</td>
                 <td >{item.updated_at ? item.updated_at.toString() : ''}</td>
-                <td >
-                  <div className='btn-group'>
-                    <ReactBootStrap.Button variant="primary" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}><BsPencilSquare />{" "}</ReactBootStrap.Button>
-                    <ReactBootStrap.Button variant="danger" onClick={() => {handleUpdateButtonClick(item);toggleModalDelete()}}><BsTrash/>{" "}</ReactBootStrap.Button>
-                  </div>
+                
+                    {/* <ReactBootStrap.Button variant="primary" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}><BsPencilSquare />{" "}</ReactBootStrap.Button> */}
+                    <td >
+                      <div className='edit-btn-div'>
+                          <button className="edit-btn2" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}>
+                          <img src={editIcon} alt="edit" border="0" /> 
+                        </button>
+                        </div>
+                        <div className='delete-btn-div'>
+                          <button className="delete-btn2" onClick={() => {handleUpdateButtonClick(item);toggleModalDelete()}}>
+                          <img src={deleteIcon} alt="delete" border="0" /> 
+                        </button>
+                      </div>
+                   
+                    {/* <ReactBootStrap.Button variant="danger" onClick={() => {handleUpdateButtonClick(item);toggleModalDelete()}}><BsTrash/>{" "}</ReactBootStrap.Button> */}
+                    
+               
                 </td>
 
                 {entry && modalUpdate && <UpdateStatusCodePopUp  onClose={toggleModalUpdate} record={entry} />}

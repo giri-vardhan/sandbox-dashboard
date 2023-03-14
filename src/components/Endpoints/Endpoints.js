@@ -5,6 +5,7 @@ import axios from 'axios';
 import StatusCodeTable from './StatusCodeTable';
 import EndpointTable from './EndpointTable';
 import { FaStar } from 'react-icons/fa';
+import downIcon from '../icons/down.png';
 
 const Endpoints = () => {
   const [endpoints, setEndpoints] = useState([]);
@@ -136,7 +137,8 @@ useEffect(() => {
                 {/* <button>info</button> */}
               </a>
             
-            <button className="info-button" onClick={() => {handleButtonClick(recordList); handleScrollClick() }}><FaStar /> Click here!
+              <button className="info-button" onClick={() => {handleButtonClick(recordList); handleScrollClick() }}>
+              <img src={downIcon}alt="Info" border="0" />
             {/* <span className="tooltiptext">{recordList.endpoint}</span> */}
             </button>
             

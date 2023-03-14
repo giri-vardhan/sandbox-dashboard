@@ -3,6 +3,7 @@ import * as ReactBootStrap from 'react-bootstrap';
 import StatusCodeTable from './StatusCodeTable';
 import UpdateEndpointPopUp from './UpdateEndpointPopUp';
 import { BsPencilSquare } from "react-icons/bs";
+import editIcon from '../icons/edit.png';
 
 const EndpointTable = forwardRef((props,ref) => {
   const { record } = props;
@@ -88,7 +89,13 @@ const EndpointTable = forwardRef((props,ref) => {
               <td>{record.created_at ? record.created_at.toString() : ''}</td>
               <td>{record.updated_at ? record.updated_at.toString() : ''}</td>
               {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
-              <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td>
+              {/* <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td> */}
+              <td id='edit-btn1' >
+             
+                <button className="edit-btn2" onClick={toggleModal}>
+                  <img src={editIcon} alt="edit" border="0" /> 
+                </button>
+              </td>
               {modal && <UpdateEndpointPopUp  onClose={toggleModal} record={record} />}
             </tr>
           }
