@@ -72,25 +72,29 @@ const UpdateStatusCodePopUp = ({ onClose, record }) =>  {
         
         <label>
             Status Code:
+            <br />
             <input type="number" value={statusCode} onChange={handleStatusCodeChange} />
           </label>
           <br />
           <label>
-            Status Identifier:
-            <input  name="identifier" value={identifier} onChange={handleIdentifierChange} />
+            Status Code Identifier:
+            <br />
+            <input  name="identifier" value={identifier} onChange={handleIdentifierChange} style={{ width: '500px' }} />
           </label>
           <br />
           <label>
             Description:
-            <input value={description} onChange={handleDescriptionChange} />
+            <br />
+            <input value={description} onChange={handleDescriptionChange} style={{ width: '500px' }}/>
           </label>
           <br />
           <label>
             Response Body:
-            <textarea value={responseBody} onChange={handleResponseChange} />
+            <br />
+            <textarea value={responseBody} onChange={handleResponseChange} rows='4'cols='60'/>
           </label>
           <br />
-          <div className='popup-footer'>
+          <div className='popup-footer' >
           <button type="submit" className='btn btn-primary'>Add</button>
           <button type="button" className='btn btn-danger' onClick={onClose}>Cancel</button>
         </div>

@@ -96,19 +96,21 @@ console.log(isActive)
                 
                   <label>
                     Endpoint:
+                    <br />
                     <input value={endpoint} onChange={handleEndpointChange} />
                   </label>
                   <br />
                   <label className="select-method">
                     Method:
+                    <br />
                     <Select options={items} Value = {3} style={{width:'130px',position: 'relative'}} onChange={(values) => setMethod(values[0].label)}  />
                     {/* <DropDownButtonComponent items={items} select={handleMethodChange} iconCss='ddb-icons e-folder' cssClass='e-vertical' iconPosition='Top'>Move</DropDownButtonComponent> */}
                   </label>
                   <br/>
-                  <div class="reponse-content-type">
+                  {/* <div class="http-type">
                     <div>
-                      <label data-sw-translateGET for="rct0.123">Method: </label>
-                        <select name="responseContentType" id="rct0.123">
+                      <label data-sw-translateGET for="rct0.123">Method: </label><br />
+                        <select name="httpType" id="rct0.123">
                             <option value="GET">GET</option>
                             <option value="POST">POST</option>
                             <option value="PUT">PUT</option>
@@ -116,14 +118,17 @@ console.log(isActive)
                         </select>
                      </div>
                   </div>
+                  <br /> */}
                   <label>
                     File Path:
+                    <br />
                     <input value={filePath} onChange={handleFilePathChange} />
                     <span className="slider"></span>
                   </label>
                   <br />
                   <label>
                     Description:
+                    <br />
                     <input value={description} onChange={handleDescriptionChange} />
                   </label>
                   <br />

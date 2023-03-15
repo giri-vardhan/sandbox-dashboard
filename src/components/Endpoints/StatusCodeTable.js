@@ -114,7 +114,7 @@ console.log(record[0].deleted_at)
                 </td>
 
                 {entry && modalUpdate && <UpdateStatusCodePopUp  onClose={toggleModalUpdate} record={entry} />}
-                {entry && modalDelete && <DeleteStatusCodePopUp  onClose={toggleModalDelete} record={entry.id} />}
+                {entry && modalDelete && <DeleteStatusCodePopUp  onClose={toggleModalDelete} record={entry} />}
 
               </tr>
         )))}

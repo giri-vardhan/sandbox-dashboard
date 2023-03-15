@@ -34,7 +34,7 @@ const APIs = () => {
       //   height: '90vh'
       // }}
     >
-      <h1>API's</h1>
+      <h1 style={{textAlign:'center', marginTop:'10px'}}>API's</h1>
       {/* <ul className='' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <li className=''>
           <a class="getBalance-link" href="!#" data-sw-translate>getBalance</a>

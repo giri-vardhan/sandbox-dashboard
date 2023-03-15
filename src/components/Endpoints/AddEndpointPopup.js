@@ -95,20 +95,22 @@ const AddEndpointPopup = ({ onClose }) => {
         <form onSubmit={handleSubmit} className="popup-element">
           <label>
             Endpoint:
+            <br/>
             <input required type="text" value={endpoint} onChange={handleEndpointChange}/>
             <br/>
           </label>
           <br/>
           <label className="select-method">
             Method:
+            <br/>
             <Select options={items} style={{width:'130px',position: 'relative'}} onChange={(values) => setMethod(values[0].label)}  />
             {/* <DropDownButtonComponent items={items} select={handleMethodChange} iconCss='ddb-icons e-folder' cssClass='e-vertical' iconPosition='Top'>Move</DropDownButtonComponent> */}
           </label>
           <br/>
-          <div class="reponse-content-type">
+          {/* <div class="http-type">
             <div>
-                <label data-sw-translateget htmlFor="rct0.123">Method: </label>
-                <select name="responseContentType" id="rct0.123">
+                <label data-sw-translateget htmlFor="rct0.123">Method: </label><br/>
+                <select name="httpType" id="rct0.123">
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
                     <option value="PUT">PUT</option>
@@ -116,14 +118,17 @@ const AddEndpointPopup = ({ onClose }) => {
                 </select>
             </div>
           </div>
+          <br /> */}
           <label>
             File Path:
+            <br />
             <input required type="text" value={filePath} onChange={handleFilePathChange}/>
             <br/>
           </label>
           <br/>
           <label>
             Description:
+            <br />
             <input required value={description} onMouseDown={handleValidationChange} onChange={handleDescriptionChange} />
             <br />
             {description.length===0 && validation && <span className="text-danger">Enter the Description</span>}
