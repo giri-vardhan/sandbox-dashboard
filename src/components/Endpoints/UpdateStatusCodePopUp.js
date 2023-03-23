@@ -5,7 +5,7 @@ import { json } from 'react-router-dom';
 
 
 
-const UpdateStatusCodePopUp = ({ onClose, record }) =>  {  
+const UpdateStatusCodePopUp = ({ onClose, record,onUpdate }) =>  {  
   console.log(record);
   const [description, setDescription] = useState(record.description);
   const[statusCode,setStatusCode]=useState(record.status_code)
@@ -49,6 +49,8 @@ const UpdateStatusCodePopUp = ({ onClose, record }) =>  {
       if (response.ok) {
         onClose();
         console.log((description));
+        const body =await response.json()
+        onUpdate(body)
       } else {
         throw new Error('Network response was not ok.');
         //console.log(description);

@@ -6,7 +6,122 @@
   margin: 0;
   padding: 0;
 }
+#page-no{
+  
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 35px;
+  width: 35px;
+  background-color: #66347F;
+  color: #ddd;
+  font-size: medium;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ border-radius: 5px;
+  z-index: 10px;
+}
+.logo{
+  color: #fff;
+  margin-top: 15px;
+  margin-left: 170px;
+  margin-right: 120px;
+  
+  
+}
+.searchBox{
+  height: 40px;
+  width: 40%;
+  margin-top: 18px;
+  background-color: #674778;
+  color: black;
+  border: 1px solid rgb(239, 201, 244);
+  padding: 10px;
+  
+}
+.searchIcon{
+  height: 40px;
+  width: 40px;
+  margin-left: 0px;
+  margin-top: 18px;
+  
+  
+  
 
+}
+#searchIconID{
+  background-color: transparent;
+  border: 1px solid rgb(239, 201, 244);
+  outline: none;
+  justify-content: center;
+  display: flex;
+  border-radius: 0px;
+  border-left: none;
+}
+.endpoint-header-list{
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 50px;
+
+}
+.search-bar-div{
+  background-color: #66347F;
+width: 100%;
+height: 80px;
+left: 55px;
+display:flex;
+flex-direction: row;
+
+position: fixed;
+top: 0;
+transition: 850ms;
+z-index: 100px;
+}
+#add-Status{
+  float:right;
+  margin-top: -60px;
+  margin-right: 90px;
+
+}
+#add-endpoint{
+  float: right;
+  
+  margin-top: -23px;
+  margin-right: 110px;
+  margin-bottom: 13px;
+  
+
+
+}
+.pagination{
+  display:flex;
+justify-content: center;
+padding: 10px;
+margin-left: 100px;
+
+
+}
+.swagger-wrap{
+  z-index: 0px;
+  margin-top: 100px;
+}
+.status-header{
+  text-align: center;
+  margin-top: 40px;
+}
+.endpoint-header{
+  
+  text-align: center;
+  margin-top: -45px;
+}
+button.backButton{
+  border: none;
+  outline: none;
+
+  background: transparent;
+  margin-top: 30px;
+  z-index: 10px;
+  margin-left: 80px;
+  
+}
 .btn-success {
   margin-left: 100px;
 }
@@ -22,6 +137,7 @@
   justify-content: center;
   padding: 13px;
   align-items: center;
+  z-index: 10;
 }
 .popup-element{
   display:inline-flex;
@@ -107,6 +223,7 @@ input {
   /* display: block; 
   width: 100%;  */
   color: black;
+  
 }
 
 
@@ -120,11 +237,17 @@ input {
   text-decoration: none;
 }
 .endpoint-list-links{
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   margin-left: 100px;
   margin-right: 100px;
   margin-bottom: 10px;
+  padding-top: 13px;
+  align-items: center;
   font-weight: bold;
+  background-color: #2BBF50;
+  height: 50px;
+  border-radius: 30px;
+ 
 }
 .endpoint-method {
   border: 1px solid rgb(61, 42, 208);
@@ -143,7 +266,7 @@ input {
   text-align: left;
   display: block;
   padding: 10px;
-  border: 1px solid black;
+  border: 0px solid black;
   margin: 10px 0;
   text-decoration: none;
   color: black;
@@ -173,8 +296,13 @@ input {
 
 .copy-btn-div {
   bottom: 0px;
-  margin-top: 30px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 600px;
+  overflow:hidden 
+}
+.copy-btn-div:hover{
+  overflow: auto;
 }
 .copy-btn2:hover{
   background-color: #2BBF50;
@@ -186,9 +314,7 @@ input {
   border: none;
   outline: none;
   background: transparent;
-
-
-  
+  margin-top: 0px;
 }
 
 button.edit-btn2{
@@ -214,7 +340,7 @@ button.delete-btn2 {
   background: transparent;
   margin-top: 0px;
   margin-left: 12px;
-
+  justify-content: center;
 }
 
 .delete-btn-div {
@@ -224,7 +350,7 @@ button.delete-btn2 {
   height: 10px;
   width: 10px;
   margin-right: 15px;
-  margin-top: 10px;
+  
   
 }
 p {
@@ -234,16 +360,18 @@ p {
 }
 
 .table {
-  margin: 30px;
+  margin: 0px;
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #fff;
+  margin-left: 60px;
 }
 .table th {
   font-size: 13px;
 }
 .table td {
   font-size: 11px;
+  margin: 5px;
 }
 
 
@@ -252,6 +380,7 @@ p {
   color: #fff;
   font-weight: bold;
 }
+
 
 .table tbody td,
 .table thead th {
@@ -355,4 +484,7 @@ p {
 #closeBtn {
   background-color: crimson;
 } */
-
+.table-responsive {
+  
+  margin: 30px;
+}

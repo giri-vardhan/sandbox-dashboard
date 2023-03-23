@@ -5,8 +5,8 @@ import UpdateEndpointPopUp from './UpdateEndpointPopUp';
 import { BsPencilSquare } from "react-icons/bs";
 import editIcon from '../icons/edit.png';
 
-const EndpointTable = forwardRef((props,ref) => {
-  const { record } = props;
+const EndpointTable = forwardRef((props) => {
+  const [record,setRecord] = useState(props.record)
   console.log('props recived' , record)
   const [data,setData] =useState([]);
   const [modal,setModal] =useState(false);
@@ -17,7 +17,7 @@ const EndpointTable = forwardRef((props,ref) => {
     setModal(!modal)
   }
   const handleUpdateClick = (value) => {
-
+    setRecord(value)
   }
 
   const tableRef = useRef(null)
@@ -47,9 +47,10 @@ const EndpointTable = forwardRef((props,ref) => {
 
   
   return(
+   
     <div className='table-responsive' id='endpoint-table' >
-      <h4 ref={ref}>Endpoint Table</h4>
-      <ReactBootStrap.Table striped bordered hover size="sm" className="table table-bordered">
+      
+      <ReactBootStrap.Table striped bordered hover  className="table table-bordered">
         <thead className="bg-dark text-white">
           <tr>
             
@@ -86,8 +87,8 @@ const EndpointTable = forwardRef((props,ref) => {
               <td className='text-nowrap'>{record.active ? record.active.Bool.toString() : ''}</td>
               <td className='text-nowrap'> {record.description}</td>
               <td className='text-nowrap'>{record.file_path ? record.file_path.String.toString() : ''}</td>
-              <td>{record.created_at ? record.created_at.toString() : ''}</td>
-              <td>{record.updated_at ? record.updated_at.toString() : ''}</td>
+              <td>{record.created_at.toString()}</td>
+              <td>{record.updated_at.toString()}</td>
               {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
               {/* <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td> */}
               <td id='edit-btn1' >
@@ -96,7 +97,7 @@ const EndpointTable = forwardRef((props,ref) => {
                   <img src={editIcon} alt="edit" border="0" /> 
                 </button>
               </td>
-              {modal && <UpdateEndpointPopUp  onClose={toggleModal} record={record} />}
+              {modal && <UpdateEndpointPopUp onUpdate={handleUpdateClick} onClose={toggleModal} record={record} />}
             </tr>
           }
           

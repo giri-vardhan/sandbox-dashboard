@@ -1,30 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import copyIcon from '../icons/copy.png';
+import Popup from './AddStatusCodePopup';
+
 import editIcon from '../icons/edit.png';
 import deleteIcon from '../icons/delete.png';
-
+import tickIcon from '../icons/doubleTick.png'
 import * as ReactBootStrap from 'react-bootstrap';
 import UpdateStatusCodePopUp from './UpdateStatusCodePopUp';
 import DeleteStatusCodePopUp from './DeleteStatusCodePopUp';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
+import addIcon from '../icons/add.png';
 
-const StatusCodeTable = ({record}) => {
+const StatusCodeTable = (props) => {
+  const [record,setRecord] = useState(props.record)
+  const [endpoint,setEndpoint]=useState(props.endpoint)
+
     console.log('props recived statuscode' , record)
     
     const [results, setResults] = useState([]);
     const [modalUpdate,setModalUpdate]= useState();
     const [modalDelete,setModalDelete]= useState();
     const [entry,setEntry] =useState();
-
+    const [modalAdd,setModalAdd]=useState();
     const handleUpdateButtonClick = (value) =>{
       setEntry(value)
+    }
+    const toggleModalAdd = () => {
+      setModalAdd(!modalAdd)
+    }
+    const handleDeleteClick =(value)=>{
+      const newEntry=record.filter((item)=>item.id!==value)
+      setRecord(newEntry);
+      console.log(record)
+    }
+    const handleUpdateClick = (value) => {
+      var newEntry=record.filter((item)=>item.id!==value.id)
+      newEntry=[...newEntry,value]
+      newEntry.sort((a,b)=>a.status_code-b.status_code)
+      setRecord(newEntry);
+      console.log(record)
+
     }
     const toggleModalUpdate = ()=> {
       setModalUpdate(!modalUpdate)
     }
     const toggleModalDelete = ()=> {
       setModalDelete(!modalDelete)
+    }
+    const addData =(data)=>{
+      const body={
+        id:data.id,
+        status_code:data.status_code,
+        status_code_identifier:data.status_code_identifier,
+        response_body:data.response_body,
+        description:data.description,
+        endpoint_id:data.endpoint_id,
+        created_at:new Date().toLocaleTimeString(),
+        updated_at:new Date().toLocaleTimeString(),
+        deleted_at:{Time:null,Valid:false} 
+      }
+      const newEntry=[...record,body]
+      newEntry.sort((a,b)=>a.status_code-b.status_code)
+      setRecord(newEntry)
     }
 
     // const uniqueIds = [...new Set(record.map(item => item.id))];
@@ -62,17 +100,36 @@ const StatusCodeTable = ({record}) => {
       
     //   const filteredData = results.filter(item => item.endpoint_id === record);
     //   console.log(filteredData);
+    // const img=[copyIcon,tickIcon]
+    
+    // const [index,setIndex]=useState(0)
+    // const [currentImage,setCurrentImage]=useState(img[index])
+    // const handleCopy=async ()=>{
+    //   console.log(index,currentImage)
+    //   setIndex( (prevRecord) =>  prevRecord+1);
+    //   setCurrentImage(img[index]);
+    //   setTimeout(()=>{
+    //     setIndex(0)
+    //     setCurrentImage(img[index])
+    //   },5000);
+    //   console.log(index,currentImage)
+    // }
       console.log(results);
 console.log(record[0].deleted_at)
     return (
+      <div><button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+     Add Status Code
+    </button>
+    
         <div className="table-responsive">
+          
           <ReactBootStrap.Table striped bordered hover size="sm" className="table table-sm table-bordered">
           <thead className="bg-dark text-white">
             <tr>
+              <th className='text-nowrap'style={{width:'10%'}}>Name</th>
               <th className='text-nowrap'>Status Code</th>
               <th className='text-nowrap'>Description</th>
               <th className='text-nowrap'>Response_body</th>
-              <th className='text-nowrap'>Name</th>
               <th className='text-nowrap'>Created At</th>
               <th className='text-nowrap'>Updated At</th>
               <th className='text-nowrap'>Action</th>
@@ -83,17 +140,19 @@ console.log(record[0].deleted_at)
             {record.map((item) => (
               item.deleted_at.Valid === false && (
               <tr key={item.id}>
+                <td style={{width:'10%'}}>{item.status_code_identifier}</td>
                 <td className='text-nowrap'>{item.status_code}</td>
                 <td >{item.description}</td>
-                <td  id='copy-btn1'>{JSON.stringify(item.response_body) }
+                <td  id='copy-btn1'>
                 <div className='copy-btn-div'>
+                  <text className=''>{JSON.stringify(item.response_body) }</text>
+                  </div> <div className='copy-btn-div'>
                 <button className="copy-btn2" onClick={() => {
                   navigator.clipboard.writeText(JSON.stringify(item.response_body));}}>
                   <img src={copyIcon} alt="copy" border="0" /> 
                 </button></div></td>
-                <td className='text-nowrap'>{item.status_code_identifier}</td>
-                <td >{item.created_at ? item.created_at.toString() : ''}</td>
-                <td >{item.updated_at ? item.updated_at.toString() : ''}</td>
+                <td >{item.created_at.toString()}</td>
+                <td >{ item.updated_at.toString()}</td>
                 
                     {/* <ReactBootStrap.Button variant="primary" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}><BsPencilSquare />{" "}</ReactBootStrap.Button> */}
                     <td >
@@ -113,15 +172,16 @@ console.log(record[0].deleted_at)
                
                 </td>
 
-                {entry && modalUpdate && <UpdateStatusCodePopUp  onClose={toggleModalUpdate} record={entry} />}
-                {entry && modalDelete && <DeleteStatusCodePopUp  onClose={toggleModalDelete} record={entry} />}
-
+                {entry && modalUpdate && <UpdateStatusCodePopUp onUpdate={handleUpdateClick} onClose={toggleModalUpdate} record={entry} />}
+                {entry && modalDelete && <DeleteStatusCodePopUp  onDelete={handleDeleteClick}onClose={toggleModalDelete} record={entry} />}
+                {modalAdd && <Popup  onData={addData} onClose={toggleModalAdd} endpoint={endpoint} />}
               </tr>
         )))}
             
           </tbody>
      
     </ReactBootStrap.Table>
+    </div>
     </div>
     );
 };

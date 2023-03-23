@@ -24,14 +24,14 @@ const items = [
   }
 ];
 
-const UpdateEndpointPopUp = ({ onClose, record }) => {
+const UpdateEndpointPopUp = ({ onClose, record,onUpdate }) => {
   console.log(record.active)
   const [description, setDescription] = useState(record.description);
   const [endpoint,setEndpoint]=useState(record.endpoint)
   
   const [method,setMethod]=useState(record.method)
   console.log(method)
-  const [filePath,setFilePath]=useState(record.filePath)
+  const [filePath,setFilePath]=useState(record.file_path ? record.file_path.String.toString() : '')
   const [isActive, setIsActive] = useState(record.active.Bool);
   
 
@@ -69,6 +69,8 @@ const UpdateEndpointPopUp = ({ onClose, record }) => {
       if (response.ok) {
         onClose();
         console.log((description));
+        const body =await response.json()
+        onUpdate(body)
       } else {
         throw new Error('Network response was not ok.');
         //console.log(description);
@@ -76,6 +78,7 @@ const UpdateEndpointPopUp = ({ onClose, record }) => {
     } catch (error) {
       console.error(error);
     }
+
   };
   useEffect((record)=>{
 

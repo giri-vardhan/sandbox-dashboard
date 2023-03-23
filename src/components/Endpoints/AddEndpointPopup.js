@@ -23,7 +23,7 @@ const items = [
     label: "DELETE"
   }
 ];
-const AddEndpointPopup = ({ onClose }) => {
+const AddEndpointPopup = ({ onClose ,onData}) => {
   
   const [description, setDescription] = useState('');
   const [validation,validationChange]=useState(false);
@@ -71,6 +71,9 @@ const AddEndpointPopup = ({ onClose }) => {
       //console.log(description);
       if (response.ok) {
         onClose();
+        const r=await response.json()
+        console.log(r)
+        onData(r)
         console.log((description));
       } else {
         throw new Error('Network response was not ok.');
@@ -122,7 +125,7 @@ const AddEndpointPopup = ({ onClose }) => {
           <label>
             File Path:
             <br />
-            <input required type="text" value={filePath} onChange={handleFilePathChange}/>
+            <input  type="text" value={filePath} onChange={handleFilePathChange}/>
             <br/>
           </label>
           <br/>

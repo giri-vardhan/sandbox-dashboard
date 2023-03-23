@@ -1,32 +1,27 @@
 import React from 'react'
 import { Nav, NavLink,Bars,NavMenu,NavBtn, NavBtnLink } from './NavbarElements';
+import apiIcon from '../icons/api.png'
 
 
 const Navbar = () => { 
   return (
     <>
-        <Nav>
-            <NavLink to='/'>
-                <h1>Logo</h1>
-            </NavLink>
-            <Bars/>
-            <NavMenu>
+        <Nav >
+        <NavMenu style={{marginRight:'400px'}}>
                 <NavLink to='/about' actiivesytle='true'>
                     About
                 </NavLink>
                 <NavLink to='/apis' actiivesytle='true'>
-                    API's
+                    <img src={apiIcon} alt="API"/>
                 </NavLink>
-                <NavLink to='/contact-us' actiivactiivesytle='true'>
-                    Contact Us
-                </NavLink>
-                <NavLink to='/sign-up' actiivesytle='true'>
-                    Sing Up
-                </NavLink>
+                
             </NavMenu>
-            <NavBtn>
-                <NavBtnLink to='/signin'>Sign In</NavBtnLink>
-            </NavBtn>
+            <NavLink to='/'>
+                <h1>Logo</h1>
+            </NavLink>
+            <Bars/>
+            
+           
         </Nav>
     </>
   )
