@@ -57,7 +57,7 @@ const AddStatusCodePopup=({onClose,endpoint,onData})=>{
           }
     }
     return(
-        <div className="popup-background">
+        // <div className="popup-background">
     <div className="popup-container">
       <div className="popup-content">
       <div className="titleCloseBtn">
@@ -115,7 +115,7 @@ const AddStatusCodePopup=({onClose,endpoint,onData})=>{
          
       </div>
     </div>
-    </div>
+    // </div>
     );
 };
 

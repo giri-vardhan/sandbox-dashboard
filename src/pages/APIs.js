@@ -83,12 +83,11 @@ const handleClickBack=()=>{
       
   <div>
 <div className='endpointHeader'>
-      
+    <h2 className='endpoint-header' >Endpoint</h2></div>
+    {entry && <EndpointTable ref={myDivRef} record={entry} />}
     <button className='backButton' onClick={handleClickBack}>
       <img src={backIcon} alt="Back"/>
     </button>
-    <h2 className='endpoint-header' >Endpoint</h2></div>
-    {entry && <EndpointTable ref={myDivRef} record={entry} />}
     {result && result.length && <div><h2 className='status-header'>Status Code Table</h2>  <StatusCodeTable record={result} endpoint={entry} /></div>}
   </div>
 ) : (

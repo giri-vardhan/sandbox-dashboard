@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import copyIcon from '../icons/copy.png';
 import Popup from './AddStatusCodePopup';
+import SearchBar from '../Navbar/searchBar'
+
 
 import editIcon from '../icons/edit.png';
 import deleteIcon from '../icons/delete.png';
@@ -18,7 +20,6 @@ const StatusCodeTable = (props) => {
 
     console.log('props recived statuscode' , record)
     
-    const [results, setResults] = useState([]);
     const [modalUpdate,setModalUpdate]= useState();
     const [modalDelete,setModalDelete]= useState();
     const [entry,setEntry] =useState();
@@ -64,6 +65,18 @@ const StatusCodeTable = (props) => {
       newEntry.sort((a,b)=>a.status_code-b.status_code)
       setRecord(newEntry)
     }
+    const handleSearch=(input)=>{
+      
+      record.filter((i) => {
+        
+        if (i.status_code_identifier===input){
+          console.log(i)
+          setRecord([])
+          setRecord(preRecord=>preRecord.concat(i))
+          return
+        }
+      });
+      }
 
     // const uniqueIds = [...new Set(record.map(item => item.id))];
     console.log(record); 
@@ -114,10 +127,13 @@ const StatusCodeTable = (props) => {
     //   },5000);
     //   console.log(index,currentImage)
     // }
-      console.log(results);
-console.log(record[0].deleted_at)
+      console.log(record);
+
     return (
-      <div><button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+      
+      
+      <div>
+      <SearchBar header={'Status Code'} onSearch={handleSearch}/><button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
      Add Status Code
     </button>
     

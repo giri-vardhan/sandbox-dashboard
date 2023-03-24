@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useRef,forwardRef } from 'react';
-import * as ReactBootStrap from 'react-bootstrap';
-import StatusCodeTable from './StatusCodeTable';
-import UpdateEndpointPopUp from './UpdateEndpointPopUp';
+import React, { useState, useEffect, useRef, forwardRef } from "react";
+import * as ReactBootStrap from "react-bootstrap";
+import StatusCodeTable from "./StatusCodeTable";
+import UpdateEndpointPopUp from "./UpdateEndpointPopUp";
 import { BsPencilSquare } from "react-icons/bs";
-import editIcon from '../icons/edit.png';
+import editIcon from "../icons/edit.png";
 
 const EndpointTable = forwardRef((props) => {
-  const [record,setRecord] = useState(props.record)
-  console.log('props recived' , record)
-  const [data,setData] =useState([]);
-  const [modal,setModal] =useState(false);
-  const [searchValue,setSearchValue] = useState([]);
-  console.log('record****' , record)
+  const [record, setRecord] = useState(props.record);
+  console.log("props recived", record);
+  const [data, setData] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [searchValue, setSearchValue] = useState([]);
+  console.log("record****", record);
 
   const toggleModal = () => {
-    setModal(!modal)
-  }
+    setModal(!modal);
+  };
   const handleUpdateClick = (value) => {
-    setRecord(value)
-  }
+    setRecord(value);
+  };
 
-  const tableRef = useRef(null)
+  const tableRef = useRef(null);
 
   // useEffect(() => {
   //    if (record) {
@@ -41,31 +41,32 @@ const EndpointTable = forwardRef((props) => {
   //     .then(data => setData(data))
   //     .catch(error => console.error(error));
   // }, []);
-  
+
   // const filteredData = data.filter(item => item.endpoint === record);
   // console.log("filtered data",filteredData);
 
-  
-  return(
-   
-    <div className='table-responsive' id='endpoint-table' >
-      
-      <ReactBootStrap.Table striped bordered hover  className="table table-bordered">
+  return (
+    <div className="table-responsive" id="endpoint-table">
+      <ReactBootStrap.Table
+        striped
+        bordered
+        hover
+        className="table table-bordered"
+      >
         <thead className="bg-dark text-white">
           <tr>
-            
-            <th className='text-nowrap'>Name</th>
-            <th className='text-nowrap'>Method</th>
-            <th className='text-nowrap'>Active </th>
-            <th className='text-nowrap'>Description</th>
-            <th className='text-nowrap'>File Path</th>
+            <th className="text-nowrap">Name</th>
+            <th className="text-nowrap">Method</th>
+            <th className="text-nowrap">Active </th>
+            <th className="text-nowrap">Description</th>
+            <th className="text-nowrap">File Path</th>
             <th>Created At</th>
             <th>Updated At</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-        {/* {filteredData.map(item => (
+          {/* {filteredData.map(item => (
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.endpoint}</td>
@@ -82,29 +83,36 @@ const EndpointTable = forwardRef((props) => {
 
           {
             <tr key={record.id}>
-              <td className='text-nowrap'>{record.endpoint}</td>
-              <td className='text-nowrap'>{record.method}</td>
-              <td className='text-nowrap'>{record.active ? record.active.Bool.toString() : ''}</td>
-              <td className='text-nowrap'> {record.description}</td>
-              <td className='text-nowrap'>{record.file_path ? record.file_path.String.toString() : ''}</td>
+              <td className="text-nowrap">{record.endpoint}</td>
+              <td className="text-nowrap">{record.method}</td>
+              <td className="text-nowrap">
+                {record.active ? record.active.Bool.toString() : ""}
+              </td>
+              <td className="text-nowrap"> {record.description}</td>
+              <td className="text-nowrap">
+                {record.file_path ? record.file_path.String.toString() : ""}
+              </td>
               <td>{record.created_at.toString()}</td>
               <td>{record.updated_at.toString()}</td>
               {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
               {/* <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td> */}
-              <td id='edit-btn1' >
-             
+              <td id="edit-btn1">
                 <button className="edit-btn2" onClick={toggleModal}>
-                  <img src={editIcon} alt="edit" border="0" /> 
+                  <img src={editIcon} alt="edit" border="0" />
                 </button>
               </td>
-              {modal && <UpdateEndpointPopUp onUpdate={handleUpdateClick} onClose={toggleModal} record={record} />}
+              {modal && (
+                <UpdateEndpointPopUp
+                  onUpdate={handleUpdateClick}
+                  onClose={toggleModal}
+                  record={record}
+                />
+              )}
             </tr>
           }
-          
         </tbody>
-      
-    </ReactBootStrap.Table>
-    {/* <StatusCodeTable record = {filteredData} /> */}
+      </ReactBootStrap.Table>
+      {/* <StatusCodeTable record = {filteredData} /> */}
     </div>
   );
 
@@ -124,7 +132,7 @@ const EndpointTable = forwardRef((props) => {
   //       </tr>
   //     </thead>
   //     <tbody>
-      
+
   //       {data.map(item => (
   //         <tr key={item.id}>
   //           <td>{item.id}</td>
@@ -138,17 +146,15 @@ const EndpointTable = forwardRef((props) => {
 
   //         </tr>
   //       ))}
-        
+
   //     </tbody>
-      
+
   //   </ReactBootStrap.Table>
   //   <StatusCodeTable />
   //   </div>
   // );
-    
 });
 export default EndpointTable;
-
 
 // return(
 //   <div className='table'>
@@ -193,7 +199,7 @@ export default EndpointTable;
 // <button className="close-table" id="closeBtn" type="button" onClick={onClose}>Close</button>
 // </div>
 // </table>
-// <br /> 
+// <br />
 // <br />
 // </div>
 // </div>

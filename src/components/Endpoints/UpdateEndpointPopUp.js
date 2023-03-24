@@ -86,8 +86,8 @@ const UpdateEndpointPopUp = ({ onClose, record,onUpdate }) => {
   );
 console.log(isActive)
   return (
-    <div className="popup-background">
-      <div className="popup-container">
+    // <div className="popup-background">
+      <div className="popup-container" style={{  backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
         <div className="popup-content">
           <div className="titleCloseBtn">
             <button onClick={onClose} id="close-btn">
@@ -147,7 +147,7 @@ console.log(isActive)
                 </form>
         </div> 
       </div>
-    </div>
+    // </div>
   );
 };
 

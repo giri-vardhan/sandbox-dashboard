@@ -1,33 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sora&display=swap");
 
 * {
-  font-family: 'Sora', sans-serif;
+  font-family: "Sora", sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-#page-no{
-  
+.table-responsive {
+  margin: 30px;
+}
+
+#page-no {
   margin-left: 5px;
   margin-right: 5px;
   height: 35px;
   width: 35px;
-  background-color: #66347F;
+  background-color: #66347f;
   color: #ddd;
   font-size: medium;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
- border-radius: 5px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  border-radius: 5px;
   z-index: 10px;
 }
-.logo{
+
+.logo {
   color: #fff;
   margin-top: 15px;
   margin-left: 170px;
   margin-right: 120px;
-  
-  
 }
-.searchBox{
+.searchBox {
   height: 40px;
   width: 40%;
   margin-top: 18px;
@@ -35,19 +37,15 @@
   color: black;
   border: 1px solid rgb(239, 201, 244);
   padding: 10px;
-  
 }
-.searchIcon{
+.searchIcon {
   height: 40px;
   width: 40px;
   margin-left: 0px;
   margin-top: 18px;
-  
-  
-  
-
 }
-#searchIconID{
+
+#searchIconID {
   background-color: transparent;
   border: 1px solid rgb(239, 201, 244);
   outline: none;
@@ -56,71 +54,62 @@
   border-radius: 0px;
   border-left: none;
 }
-.endpoint-header-list{
+.endpoint-header-list {
   text-align: center;
   margin-top: 0px;
   margin-bottom: 50px;
-
 }
-.search-bar-div{
-  background-color: #66347F;
-width: 100%;
-height: 80px;
-left: 55px;
-display:flex;
-flex-direction: row;
+.search-bar-div {
+  background-color: #66347f;
+  width: 100%;
+  height: 80px;
+  left: 55px;
+  display: flex;
+  flex-direction: row;
 
-position: fixed;
-top: 0;
-transition: 850ms;
-z-index: 100px;
+  position: fixed;
+  top: 0;
+  transition: 850ms;
+  z-index: 100px;
 }
-#add-Status{
-  float:right;
+#add-Status {
+  float: right;
   margin-top: -60px;
   margin-right: 90px;
-
 }
-#add-endpoint{
+#add-endpoint {
   float: right;
-  
+
   margin-top: -23px;
   margin-right: 110px;
   margin-bottom: 13px;
-  
-
-
 }
-.pagination{
-  display:flex;
-justify-content: center;
-padding: 10px;
-margin-left: 100px;
-
-
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin-left: 100px;
 }
-.swagger-wrap{
+.swagger-wrap {
   z-index: 0px;
   margin-top: 100px;
 }
-.status-header{
+.status-header {
   text-align: center;
-  margin-top: 40px;
+  margin-top: -50px;
 }
-.endpoint-header{
-  
+.endpoint-header {
   text-align: center;
-  margin-top: -45px;
+  margin-top: 90px;
 }
-button.backButton{
+button.backButton {
   border: none;
   outline: none;
 
   background: transparent;
-  margin-top: 30px;
+  margin-top: 0px;
   z-index: 10px;
   margin-left: 80px;
-  
 }
 .btn-success {
   margin-left: 100px;
@@ -132,22 +121,21 @@ button.backButton{
   width: 100%;
   height: 100%;
   margin-bottom: 20px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   padding: 13px;
   align-items: center;
   z-index: 10;
 }
-.popup-element{
-  display:inline-flex;
-  flex-direction: column; 
+.popup-element {
+  display: inline-flex;
+  flex-direction: column;
   align-items: flex-start;
 }
-.popup-footer{
+.popup-footer {
   margin-top: 20px;
   align-content: center;
-  
 }
 /* button, input, optgroup, select, textarea {
     margin: 0;
@@ -161,12 +149,11 @@ input {
   width: 300px;
 }
 
-.titleCloseBtn{
+.titleCloseBtn {
   position: relative;
 }
-#close-btn:hover{
+#close-btn:hover {
   background-color: #e3e5e6;
-  
 }
 #close-btn {
   position: absolute;
@@ -176,21 +163,21 @@ input {
   height: 40px;
   background-color: #fff;
   border: none;
-  color:rgb(11, 12, 11);
+  color: rgb(11, 12, 11);
   font-size: 15px;
   font-weight: bold;
   border-radius: 20px;
   cursor: pointer;
   text-decoration: none;
 }
-.popup-footer .btn.btn-primary{
+.popup-footer .btn.btn-primary {
   margin-right: 10px;
   margin-left: 40px;
   width: 90px;
-  }
-  .popup-footer .btn.btn-danger{
-    width: 90px;
-  }
+}
+.popup-footer .btn.btn-danger {
+  width: 90px;
+}
 .popup-content {
   background-color: white;
   padding-top: 30px;
@@ -200,7 +187,6 @@ input {
   height: auto;
   width: auto;
   border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   max-width: 100%;
   max-height: 100%;
   overflow: auto;
@@ -209,11 +195,11 @@ input {
 .popup-content h2 {
   margin-top: 10px;
   margin-bottom: 20px;
-  text-align: center
+  text-align: center;
 }
 
-
-.endpoint-list-links a,button {
+.endpoint-list-links a,
+button {
   display: inline-block;
   margin-right: 10px;
   cursor: pointer;
@@ -223,20 +209,19 @@ input {
   /* display: block; 
   width: 100%;  */
   color: black;
-  
 }
 
-
-.endpoint-link h6,a{
+.endpoint-link h6,
+a {
   display: inline;
   margin-left: 5px;
   font-weight: bold;
 }
 
-.endpoint-link a{
+.endpoint-link a {
   text-decoration: none;
 }
-.endpoint-list-links{
+.endpoint-list-links {
   border-bottom: 2px solid black;
   margin-left: 100px;
   margin-right: 100px;
@@ -244,37 +229,42 @@ input {
   padding-top: 13px;
   align-items: center;
   font-weight: bold;
-  background-color: #2BBF50;
+  background-color: #2bbf50;
   height: 50px;
   border-radius: 30px;
- 
 }
 .endpoint-method {
   border: 1px solid rgb(61, 42, 208);
   height: 19px;
   width: 58px;
   background-color: rgba(78, 124, 243, 0.791);
-  margin-right:20px ;
+  margin-right: 20px;
   margin-left: 20px;
   padding-bottom: 20px;
   text-decoration: none;
   font-weight: bold;
 }
-
+.root {
+  overflow: hidden;
+}
 .endpoints {
   font-size: small;
   text-align: left;
   display: block;
   padding: 10px;
   border: 0px solid black;
-  margin: 10px 0;
+  margin: 10px;
   text-decoration: none;
   color: black;
 }
+/* .endpoints:hover{
+  overflow: auto;
+  
+} */
 
 .info-button {
   float: right;
-  outline:none;
+  outline: none;
   border: none;
   background: transparent;
   text-decoration: none;
@@ -283,15 +273,13 @@ input {
 }
 
 .copy-btn2 {
-  position:relative;
-  /* outline: none;
-  background: none; */
   margin-top: 7px;
   margin-bottom: 0px;
   float: right;
   bottom: 0px;
   border: none;
   background: transparent;
+  z-index: -100px;
 }
 
 .copy-btn-div {
@@ -299,25 +287,26 @@ input {
   margin-top: 10px;
   margin-bottom: 10px;
   width: 600px;
-  overflow:hidden 
+  overflow: hidden;
+  z-index: -100px;
 }
-.copy-btn-div:hover{
+.copy-btn-div:hover {
   overflow: auto;
 }
-.copy-btn2:hover{
-  background-color: #2BBF50;
+.copy-btn2:hover {
+  background-color: #2bbf50;
   background: #333;
- border-radius: 5px;
+  border-radius: 5px;
 }
 
-.edit-btn-div{
+.edit-btn-div {
   border: none;
   outline: none;
   background: transparent;
   margin-top: 0px;
 }
 
-button.edit-btn2{
+button.edit-btn2 {
   border: none;
   outline: none;
 
@@ -328,10 +317,10 @@ button.edit-btn2{
   margin-top: 0px;
 }
 
-button.delete-btn2:hover{
+button.delete-btn2:hover {
   border: black solid 1px;
 }
-button.edit-btn2:hover{
+button.edit-btn2:hover {
   border: black solid 1px;
 }
 button.delete-btn2 {
@@ -350,8 +339,6 @@ button.delete-btn2 {
   height: 10px;
   width: 10px;
   margin-right: 15px;
-  
-  
 }
 p {
   margin-top: 0;
@@ -360,11 +347,13 @@ p {
 }
 
 .table {
-  margin: 0px;
+  /* margin: 0px; */
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #fff;
   margin-left: 60px;
+  overflow: hidden;
+  border-radius: 10px;
 }
 .table th {
   font-size: 13px;
@@ -374,24 +363,31 @@ p {
   margin: 5px;
 }
 
-
 .table thead th {
-  background-color: #343a40;
+  background-color: rgba(102, 51, 153, 0);
   color: #fff;
   font-weight: bold;
+
 }
 
-
-.table tbody td,
+.table tbody td {
+  border-color: rgba(236, 236, 236, var(--tw-border-opacity));
+  padding: 8px;
+  text-align: center;
+  /* background-color: rgba(236, 236, 236, var(--tw-border-opacity)); */
+  border: none;
+}
 .table thead th {
   border: 2px solid #ddd;
   padding: 8px;
   text-align: center;
+  background-color: rgba(102, 51, 153, 0.5);
+  border: none;
 }
 
-.table tbody tr:nth-child(even) {
+/* .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
-}
+} */
 
 .table tbody tr:hover {
   background-color: #d9edf7;
@@ -412,7 +408,6 @@ p {
   margin: 2px;
   display: inline-block;
 }
-
 
 /* .table-background {
   width: 100vw;
@@ -484,7 +479,3 @@ p {
 #closeBtn {
   background-color: crimson;
 } */
-.table-responsive {
-  
-  margin: 30px;
-}

@@ -86,8 +86,8 @@ const AddEndpointPopup = ({ onClose ,onData}) => {
   
 
   return (
-    <div className="popup-background">
-    <div className="popup-container">
+    // <div className="popup-background">
+    <div className="popup-container"style={{  backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
       <div className="popup-content">
       <div className="titleCloseBtn">
           <button onClick={onClose} id="close-btn">
@@ -145,7 +145,7 @@ const AddEndpointPopup = ({ onClose ,onData}) => {
          
       </div>
     </div>
-    </div>
+    // </div>
   );
 };
 
