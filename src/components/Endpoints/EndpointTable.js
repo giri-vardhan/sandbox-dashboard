@@ -1,25 +1,41 @@
-import React, { useState, useEffect, useRef,forwardRef } from 'react';
-import * as ReactBootStrap from 'react-bootstrap';
-import StatusCodeTable from './StatusCodeTable';
-import UpdateEndpointPopUp from './UpdateEndpointPopUp';
+import React, { useState, useEffect, useRef, forwardRef } from "react";
+import * as ReactBootStrap from "react-bootstrap";
+import StatusCodeTable from "./StatusCodeTable";
+import UpdateEndpointPopUp from "./UpdateEndpointPopUp";
 import { BsPencilSquare } from "react-icons/bs";
+import editIcon from "../icons/edit.png";
+import ToggleSwitch from "./ToggleSwitch"
+import SearchBar from "../Navbar/searchBar";
+import Popup from './AddStatusCodePopup';
 
-const EndpointTable = forwardRef((props,ref) => {
-  const { record } = props;
-  console.log('props recived' , record)
-  const [data,setData] =useState([]);
-  const [modal,setModal] =useState(false);
-  const [searchValue,setSearchValue] = useState([]);
-  console.log('record****' , record)
+const EndpointTable = forwardRef((props) => {
+  const [record, setRecord] = useState(props.record);
+  console.log("props recived", record);
+  const [data, setData] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [searchValue, setSearchValue] = useState([]);
+  console.log("record****", record);
+  const [modalAdd,setModalAdd]=useState();
 
   const toggleModal = () => {
-    setModal(!modal)
-  }
+    setModal(!modal);
+  };
   const handleUpdateClick = (value) => {
-
+    setRecord(value);
+  };
+  const toggleModalAdd = () => {
+    setModalAdd(!modalAdd)
   }
+  const handleSearch = (input) => {
 
-  const tableRef = useRef(null)
+    record.filter((i) => {
+      if (i.endpoint === input) {
+        console.log(i)
+        return;
+      }
+    });
+  };
+  const tableRef = useRef(null);
 
   // useEffect(() => {
   //    if (record) {
@@ -40,31 +56,45 @@ const EndpointTable = forwardRef((props,ref) => {
   //     .then(data => setData(data))
   //     .catch(error => console.error(error));
   // }, []);
-  
+
   // const filteredData = data.filter(item => item.endpoint === record);
   // console.log("filtered data",filteredData);
 
-  
-  return(
-    <div className='table-responsive' id='endpoint-table' >
-      <h4 ref={ref}>Endpoint Table</h4>
-      <ReactBootStrap.Table striped bordered hover size="sm" className="table table-bordered">
-        <thead className="bg-dark text-white">
+  return (
+    <div>
+    <div className='search-statusCode'>
+    <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+    {/* <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+     Add Status Code
+    </button> */}
+    <div className="table-responsive" >
+       {/* <div className='search-statusCode'>
+      <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+      <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+     Add Status Code
+    </button> */}
+              {/* <div id="swagger-ui-container" className="swagger-wrap"> */}
+<div>
+      <ReactBootStrap.Table
+        
+        bordered
+        hover
+        className="table table-sm table-bordered"
+      >
+        <thead className="text-white">
           <tr>
-            <th className='text-nowrap'>Id</th>
-            <th className='text-nowrap'>Endpoint</th>
-            <th className='text-nowrap'>Method</th>
-            <th className='text-nowrap'>Active </th>
-            <th className='text-nowrap'>Description</th>
-            <th className='text-nowrap'>File Path</th>
-            <th>created_at</th>
-            <th>updated_at</th>
-            <th>deleted_at</th>
+            <th className="text-nowrap">Name</th>
+            <th className="text-nowrap">Method</th>
+            <th className="text-nowrap">Active </th>
+            <th className="text-nowrap">Description</th>
+            <th className="text-nowrap">File Path</th>
+            {/* <th>Created At</th> */}
+            <th>Last Updated</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-        {/* {filteredData.map(item => (
+          {/* {filteredData.map(item => (
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.endpoint}</td>
@@ -81,25 +111,40 @@ const EndpointTable = forwardRef((props,ref) => {
 
           {
             <tr key={record.id}>
-              <td className='text-nowrap'>{record.id}</td>
-              <td className='text-nowrap'>{record.endpoint}</td>
-              <td className='text-nowrap'>{record.method}</td>
-              <td className='text-nowrap'>{record.active ? record.active.Bool.toString() : ''}</td>
-              <td className='text-nowrap'> {record.description}</td>
-              <td className='text-nowrap'>{record.file_path ? record.file_path.String.toString() : ''}</td>
-              <td>{record.created_at ? record.created_at.toString() : ''}</td>
-              <td>{record.updated_at ? record.updated_at.toString() : ''}</td>
-              <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td>
-              <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td>
-              {modal && <UpdateEndpointPopUp  onClose={toggleModal} record={record} />}
+              <td className="text-nowrap">{record.endpoint}</td>
+              <td className="text-nowrap">{record.method}</td>
+              <td style={{paddingBottom:'20px'}}>
+                    <ToggleSwitch value={record.active} id={record.id}/>
+                  </td>
+              <td className="text-nowrap"> {record.description}</td>
+              <td className="text-nowrap">
+                {record.file_path.Valid? record.file_path.String.toString() : "-"}
+              </td>
+              {/* <td>{new Date(record.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
+              <td>{new Date(record.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
+              {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
+              {/* <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td> */}
+              <td id="edit-btn1">
+                <button className="edit-btn2" onClick={toggleModal}>
+                  <img src={editIcon} alt="edit" border="0" />
+                </button>
+              </td>
+              {modal && (
+                <UpdateEndpointPopUp
+                  onUpdate={handleUpdateClick}
+                  onClose={toggleModal}
+                  record={record}
+                />
+              )}
             </tr>
           }
-          
         </tbody>
-      
-    </ReactBootStrap.Table>
-    {/* <StatusCodeTable record = {filteredData} /> */}
+      </ReactBootStrap.Table>
+      {/* <StatusCodeTable record = {filteredData} /> */}
+      {modalAdd && <Popup  onClose={toggleModalAdd} />}
+
     </div>
+     </div></div>
   );
 
   // return(
@@ -118,7 +163,7 @@ const EndpointTable = forwardRef((props,ref) => {
   //       </tr>
   //     </thead>
   //     <tbody>
-      
+
   //       {data.map(item => (
   //         <tr key={item.id}>
   //           <td>{item.id}</td>
@@ -132,17 +177,15 @@ const EndpointTable = forwardRef((props,ref) => {
 
   //         </tr>
   //       ))}
-        
+
   //     </tbody>
-      
+
   //   </ReactBootStrap.Table>
   //   <StatusCodeTable />
   //   </div>
   // );
-    
 });
 export default EndpointTable;
-
 
 // return(
 //   <div className='table'>
@@ -187,7 +230,7 @@ export default EndpointTable;
 // <button className="close-table" id="closeBtn" type="button" onClick={onClose}>Close</button>
 // </div>
 // </table>
-// <br /> 
+// <br />
 // <br />
 // </div>
 // </div>

@@ -23,13 +23,13 @@ const items = [
     label: "DELETE"
   }
 ];
-const Popup = ({ onClose }) => {
-  const [token, setToken] = useState('');
+const AddEndpointPopup = ({ onClose ,onData}) => {
+  
   const [description, setDescription] = useState('');
   const [validation,validationChange]=useState(false);
-  const [endpoint,setEndpoint]=useState('')
-  const [method,setMethod]=useState('')
-  const [filePath,setFilePath]=useState('')
+  const [endpoint,setEndpoint]=useState('');
+  const [method,setMethod]=useState('');
+  const [filePath,setFilePath]=useState('');
   const [http,setHttp]=useState(false);
 
   const handleFilePathChange=(event)=>{
@@ -41,9 +41,6 @@ const Popup = ({ onClose }) => {
 
   const handleEndpointChange=(event)=>{
     setEndpoint(event.target.value)
-  };
-  const handleTokenChange = (event) => {
-    setToken(event.target.value);
   };
 
   const handleValidationChange = (event) =>{
@@ -60,7 +57,7 @@ const Popup = ({ onClose }) => {
       endpoint:endpoint,
       method:method,
       description:description,
-      file_path:filePath
+      file_path:filePath,
     }
     try {
       const response = await fetch('http://localhost:9002/v1/endpoint', {
@@ -74,6 +71,9 @@ const Popup = ({ onClose }) => {
       //console.log(description);
       if (response.ok) {
         onClose();
+        const r=await response.json()
+        console.log(r)
+        onData(r)
         console.log((description));
       } else {
         throw new Error('Network response was not ok.');
@@ -86,9 +86,9 @@ const Popup = ({ onClose }) => {
   
 
   return (
-    <div className="popup-background">
-    <div className="popup-container">
-      <div className="popup-content" >
+    // <div className="popup-background">
+    <div className="popup-container"style={{  backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
+      <div className="popup-content">
       <div className="titleCloseBtn">
           <button onClick={onClose} id="close-btn">
             X
@@ -97,30 +97,41 @@ const Popup = ({ onClose }) => {
         <h2>Add Endpoint</h2>
         <form onSubmit={handleSubmit} className="popup-element">
           <label>
-            Token:
-            <input type="text" value={token}  onChange={handleTokenChange}  />
-          </label>
-          <br />
-          <label>
             Endpoint:
+            <br/>
             <input required type="text" value={endpoint} onChange={handleEndpointChange}/>
             <br/>
           </label>
           <br/>
           <label className="select-method">
             Method:
+            <br/>
             <Select options={items} style={{width:'130px',position: 'relative'}} onChange={(values) => setMethod(values[0].label)}  />
             {/* <DropDownButtonComponent items={items} select={handleMethodChange} iconCss='ddb-icons e-folder' cssClass='e-vertical' iconPosition='Top'>Move</DropDownButtonComponent> */}
           </label>
           <br/>
+          {/* <div class="http-type">
+            <div>
+                <label data-sw-translateget htmlFor="rct0.123">Method: </label><br/>
+                <select name="httpType" id="rct0.123">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+          </div>
+          <br /> */}
           <label>
             File Path:
-            <input required type="text" value={filePath} onChange={handleFilePathChange}/>
+            <br />
+            <input  type="text" value={filePath} onChange={handleFilePathChange}/>
             <br/>
           </label>
           <br/>
           <label>
             Description:
+            <br />
             <input required value={description} onMouseDown={handleValidationChange} onChange={handleDescriptionChange} />
             <br />
             {description.length===0 && validation && <span className="text-danger">Enter the Description</span>}
@@ -134,8 +145,8 @@ const Popup = ({ onClose }) => {
          
       </div>
     </div>
-    </div>
+    // </div>
   );
 };
 
-export default Popup;
+export default AddEndpointPopup;

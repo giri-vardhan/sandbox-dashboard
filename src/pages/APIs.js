@@ -1,16 +1,27 @@
 import React , {useState,useRef} from 'react';
+import { Button } from 'react-bootstrap';
 import Endpoints from '../components/Endpoints/Endpoints';
+import EndpointTable from '../components/Endpoints/EndpointTable';
+import StatusCodeTable from '../components/Endpoints/StatusCodeTable';
 import Table from '../components/Endpoints/Table';
 import Footer from '../components/Footer/Footer';
-
+import backIcon from '../components/icons/back.png';
 
 const APIs = () => {
+  const [entry,setEntry] =useState();
+  const [result,setResult] =useState();
 
   const infoSectionRef = useRef(null);
-  const myDivRef = useRef(null);
+  
+ 
+  const [showComponentA, setShowComponentA] = useState(false);
 
-  const scrollToDiv = (ref) => {
-    ref.current.scrollIntoView({ behavior: 'smooth' });
+  const handleClickInfo = (data,stattus) => 
+  {
+    console.log("here in info")
+    setEntry(data)
+    setResult(stattus)
+    setShowComponentA(true);
   };
 
   const handleClickAccordion = (e) => {
@@ -19,22 +30,24 @@ const APIs = () => {
   };
 
 
-  const handleClickInfo = (e) => {
-    e.stopPropagation();
-    scrollToDiv(infoSectionRef);
-  };
-
+  // const handleClickInfo = (e) => {
+  //   e.stopPropagation();
+  //   scrollToDiv(infoSectionRef);
+  // };
+const handleClickBack=()=>{
+  setShowComponentA(false)
+}
   return (
     <>
-    <div 
+    {/* <div 
       // style={{
       //   display: 'flex',
       //   justifyContent: 'center',
       //   alignItems: 'center',
       //   height: '90vh'
       // }}
-    >
-      <h1>API's</h1>
+    //> */}
+      {/* <h1 style={{textAlign:'center', marginTop:'10px'}}>API's</h1> */}
       {/* <ul className='' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <li className=''>
           <a class="getBalance-link" href="!#" data-sw-translate>getBalance</a>
@@ -62,9 +75,28 @@ const APIs = () => {
           consectetur adipiscing elit. Sed vel semper nunc, sit amet semper
           massa. In tincidunt ex ac quam commodo, a tincidunt eros aliquet.
   </p>*/}
-    <Endpoints />
+    {/* <Endpoints /> */}
+    {showComponentA === true ? (
+      
+      
+<div>
+<div className='endpointHeader'>
+<button className='backButton' onClick={handleClickBack}>
+      <img src={backIcon} alt="Back"/>
+    </button>
+    <h2 className='endpoint-header' >Endpoint</h2>{entry && <EndpointTable  record={entry} />}
     
-      </div> 
+    </div>
+    
+    {/* <button className='backButton' onClick={handleClickBack}>
+      <img src={backIcon} alt="Back"/>
+    </button> */}
+    { <div><h2 className='status-header'>Status Code Table</h2>  <StatusCodeTable record={result} endpoint={entry} /></div>}
+    </div>
+) : (
+  <Endpoints infoClick={handleClickInfo} />
+)}
+      {/* </div>  */}
     </>
   );
 };
