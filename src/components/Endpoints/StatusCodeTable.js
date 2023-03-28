@@ -50,6 +50,8 @@ const StatusCodeTable = (props) => {
       setModalDelete(!modalDelete)
     }
     const addData =(data)=>{
+      console.log(data)
+      
       const body={
         id:data.id,
         status_code:data.status_code,
@@ -61,9 +63,16 @@ const StatusCodeTable = (props) => {
         updated_at:new Date().toLocaleTimeString(),
         deleted_at:{Time:null,Valid:false} 
       }
+      if (record.status_code && record.status_code===400){
+        console.log(data)
+        setRecord([body])
+        return
+      }
       const newEntry=[...record,body]
       newEntry.sort((a,b)=>a.status_code-b.status_code)
+      console.log(body,record)
       setRecord(newEntry)
+      
     }
     const handleSearch=(input)=>{
       
@@ -73,7 +82,7 @@ const StatusCodeTable = (props) => {
           console.log(i)
           setRecord([])
           setRecord(preRecord=>preRecord.concat(i))
-          return
+          return 
         }
       });
       }
@@ -127,38 +136,42 @@ const StatusCodeTable = (props) => {
     //   },5000);
     //   console.log(index,currentImage)
     // }
-      console.log(record);
+      console.log(record.length);
 
     return (
       
       
       <div>
-      <SearchBar header={'Status Code'} onSearch={handleSearch}/><button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+        <div className='search-statusCode'>
+      <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+      <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
      Add Status Code
     </button>
-    
+    {record.status_code &&record.status_code===400 ?
+        <h1 className='status-not'>No Status code available</h1>:
         <div className="table-responsive">
-          
-          <ReactBootStrap.Table striped bordered hover size="sm" className="table table-sm table-bordered">
-          <thead className="bg-dark text-white">
+        {/* <div id="swagger-ui-container" className="swagger-wrap"> */}
+<div>
+          <ReactBootStrap.Table bordered hover size="sm" className="table table-sm table-bordered">
+          <thead className="text-white">
             <tr>
               <th className='text-nowrap'style={{width:'10%'}}>Name</th>
               <th className='text-nowrap'>Status Code</th>
               <th className='text-nowrap'>Description</th>
               <th className='text-nowrap'>Response_body</th>
-              <th className='text-nowrap'>Created At</th>
-              <th className='text-nowrap'>Updated At</th>
+              {/* <th className='text-nowrap'>Created At</th> */}
+              <th className='text-nowrap'>Last Updated</th>
               <th className='text-nowrap'>Action</th>
             </tr>
           </thead>
-          <tbody>
           
+          <tbody>
             {record.map((item) => (
               item.deleted_at.Valid === false && (
               <tr key={item.id}>
                 <td style={{width:'10%'}}>{item.status_code_identifier}</td>
                 <td className='text-nowrap'>{item.status_code}</td>
-                <td >{item.description}</td>
+                <td >{item.description?item.description:"-"}</td>
                 <td  id='copy-btn1'>
                 <div className='copy-btn-div'>
                   <text className=''>{JSON.stringify(item.response_body) }</text>
@@ -167,8 +180,8 @@ const StatusCodeTable = (props) => {
                   navigator.clipboard.writeText(JSON.stringify(item.response_body));}}>
                   <img src={copyIcon} alt="copy" border="0" /> 
                 </button></div></td>
-                <td >{item.created_at.toString()}</td>
-                <td >{ item.updated_at.toString()}</td>
+                {/* <td>{new Date(item.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
+                <td>{new Date(item.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
                 
                     {/* <ReactBootStrap.Button variant="primary" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}><BsPencilSquare />{" "}</ReactBootStrap.Button> */}
                     <td >
@@ -188,9 +201,7 @@ const StatusCodeTable = (props) => {
                
                 </td>
 
-                {entry && modalUpdate && <UpdateStatusCodePopUp onUpdate={handleUpdateClick} onClose={toggleModalUpdate} record={entry} />}
-                {entry && modalDelete && <DeleteStatusCodePopUp  onDelete={handleDeleteClick}onClose={toggleModalDelete} record={entry} />}
-                {modalAdd && <Popup  onData={addData} onClose={toggleModalAdd} endpoint={endpoint} />}
+                
               </tr>
         )))}
             
@@ -198,7 +209,12 @@ const StatusCodeTable = (props) => {
      
     </ReactBootStrap.Table>
     </div>
-    </div>
+    </div>}
+    {entry && modalUpdate && <UpdateStatusCodePopUp onUpdate={handleUpdateClick} onClose={toggleModalUpdate} record={entry} />}
+                {entry && modalDelete && <DeleteStatusCodePopUp  onDelete={handleDeleteClick}onClose={toggleModalDelete} record={entry} />}
+                {modalAdd && <Popup  onData={addData} onClose={toggleModalAdd} endpoint={endpoint} />}
+     </div>
+     
     );
 };
 export default StatusCodeTable;

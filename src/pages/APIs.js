@@ -12,10 +12,8 @@ const APIs = () => {
   const [result,setResult] =useState();
 
   const infoSectionRef = useRef(null);
-  const myDivRef = useRef(null);
-  const scrollToDiv = (ref) => {
-    ref.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  
+ 
   const [showComponentA, setShowComponentA] = useState(false);
 
   const handleClickInfo = (data,stattus) => 
@@ -41,14 +39,14 @@ const handleClickBack=()=>{
 }
   return (
     <>
-    <div 
+    {/* <div 
       // style={{
       //   display: 'flex',
       //   justifyContent: 'center',
       //   alignItems: 'center',
       //   height: '90vh'
       // }}
-    >
+    //> */}
       {/* <h1 style={{textAlign:'center', marginTop:'10px'}}>API's</h1> */}
       {/* <ul className='' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <li className=''>
@@ -81,19 +79,24 @@ const handleClickBack=()=>{
     {showComponentA === true ? (
       
       
-  <div>
+<div>
 <div className='endpointHeader'>
-    <h2 className='endpoint-header' >Endpoint</h2></div>
-    {entry && <EndpointTable ref={myDivRef} record={entry} />}
-    <button className='backButton' onClick={handleClickBack}>
+<button className='backButton' onClick={handleClickBack}>
       <img src={backIcon} alt="Back"/>
     </button>
-    {result && result.length && <div><h2 className='status-header'>Status Code Table</h2>  <StatusCodeTable record={result} endpoint={entry} /></div>}
-  </div>
+    <h2 className='endpoint-header' >Endpoint</h2>{entry && <EndpointTable  record={entry} />}
+    
+    </div>
+    
+    {/* <button className='backButton' onClick={handleClickBack}>
+      <img src={backIcon} alt="Back"/>
+    </button> */}
+    { <div><h2 className='status-header'>Status Code Table</h2>  <StatusCodeTable record={result} endpoint={entry} /></div>}
+    </div>
 ) : (
   <Endpoints infoClick={handleClickInfo} />
 )}
-      </div> 
+      {/* </div>  */}
     </>
   );
 };

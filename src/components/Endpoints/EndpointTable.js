@@ -4,6 +4,9 @@ import StatusCodeTable from "./StatusCodeTable";
 import UpdateEndpointPopUp from "./UpdateEndpointPopUp";
 import { BsPencilSquare } from "react-icons/bs";
 import editIcon from "../icons/edit.png";
+import ToggleSwitch from "./ToggleSwitch"
+import SearchBar from "../Navbar/searchBar";
+import Popup from './AddStatusCodePopup';
 
 const EndpointTable = forwardRef((props) => {
   const [record, setRecord] = useState(props.record);
@@ -12,6 +15,7 @@ const EndpointTable = forwardRef((props) => {
   const [modal, setModal] = useState(false);
   const [searchValue, setSearchValue] = useState([]);
   console.log("record****", record);
+  const [modalAdd,setModalAdd]=useState();
 
   const toggleModal = () => {
     setModal(!modal);
@@ -19,7 +23,18 @@ const EndpointTable = forwardRef((props) => {
   const handleUpdateClick = (value) => {
     setRecord(value);
   };
+  const toggleModalAdd = () => {
+    setModalAdd(!modalAdd)
+  }
+  const handleSearch = (input) => {
 
+    record.filter((i) => {
+      if (i.endpoint === input) {
+        console.log(i)
+        return;
+      }
+    });
+  };
   const tableRef = useRef(null);
 
   // useEffect(() => {
@@ -46,22 +61,35 @@ const EndpointTable = forwardRef((props) => {
   // console.log("filtered data",filteredData);
 
   return (
-    <div className="table-responsive" id="endpoint-table">
+    <div>
+    <div className='search-statusCode'>
+    <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+    {/* <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+     Add Status Code
+    </button> */}
+    <div className="table-responsive" >
+       {/* <div className='search-statusCode'>
+      <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+      <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
+     Add Status Code
+    </button> */}
+              {/* <div id="swagger-ui-container" className="swagger-wrap"> */}
+<div>
       <ReactBootStrap.Table
-        striped
+        
         bordered
         hover
-        className="table table-bordered"
+        className="table table-sm table-bordered"
       >
-        <thead className="bg-dark text-white">
+        <thead className="text-white">
           <tr>
             <th className="text-nowrap">Name</th>
             <th className="text-nowrap">Method</th>
             <th className="text-nowrap">Active </th>
             <th className="text-nowrap">Description</th>
             <th className="text-nowrap">File Path</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+            {/* <th>Created At</th> */}
+            <th>Last Updated</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -85,15 +113,15 @@ const EndpointTable = forwardRef((props) => {
             <tr key={record.id}>
               <td className="text-nowrap">{record.endpoint}</td>
               <td className="text-nowrap">{record.method}</td>
-              <td className="text-nowrap">
-                {record.active ? record.active.Bool.toString() : ""}
-              </td>
+              <td style={{paddingBottom:'20px'}}>
+                    <ToggleSwitch value={record.active} id={record.id}/>
+                  </td>
               <td className="text-nowrap"> {record.description}</td>
               <td className="text-nowrap">
-                {record.file_path ? record.file_path.String.toString() : ""}
+                {record.file_path.Valid? record.file_path.String.toString() : "-"}
               </td>
-              <td>{record.created_at.toString()}</td>
-              <td>{record.updated_at.toString()}</td>
+              {/* <td>{new Date(record.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
+              <td>{new Date(record.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
               {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
               {/* <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td> */}
               <td id="edit-btn1">
@@ -113,7 +141,10 @@ const EndpointTable = forwardRef((props) => {
         </tbody>
       </ReactBootStrap.Table>
       {/* <StatusCodeTable record = {filteredData} /> */}
+      {modalAdd && <Popup  onClose={toggleModalAdd} />}
+
     </div>
+     </div></div>
   );
 
   // return(

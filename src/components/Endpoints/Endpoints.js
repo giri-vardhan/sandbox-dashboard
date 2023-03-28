@@ -9,12 +9,12 @@ import EndpointTable from "./EndpointTable";
 import { FaStar } from "react-icons/fa";
 import infoIcon from "../icons/info.png";
 import playIcon from "../icons/play.png";
+import ToggleSwitch from "./ToggleSwitch"
 
-
-const Endpoints = ({ infoClick ,ref}) => {
+const Endpoints = ({ infoClick }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalEndpoint, setTotalEndpoint] = useState(0);
-  const [currentItems, setCurrentItem] = useState([]);
+  const [allEndpoint, setallEndpoint] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [endpoints, setEndpoints] = useState([]);
   const [modal, setModal] = useState(false);
@@ -78,7 +78,19 @@ const Endpoints = ({ infoClick ,ref}) => {
   };
   const addData = (data) => {
     console.log(data);
-    setRecord((prevRecord) => prevRecord.concat(data));
+    const body={
+      active:data.active,
+      description:data.description,
+      endpoint:data.endpoint,
+      file_path:data.file_path,
+      id:data.id,
+      method:data.method,
+      created_at:new Date().toLocaleTimeString(),
+      updated_at:new Date().toLocaleTimeString(),
+      deleted_at:{Time:null,Valid:false} 
+    }
+    setRecord((prevRecord) => prevRecord.concat(body));
+    setallEndpoint((prevData)=>prevData.concat(body))
     setTotalEndpoint(totalEndpoint + 1);
   };
   // const tableRef = useRef(null);
@@ -126,10 +138,24 @@ const Endpoints = ({ infoClick ,ref}) => {
     endpointData(page);
     setCurrentPage(page);
   };
+  const handelPageDecrement= async()=>{
+    if(currentPage===1){
+      return
+    }
+    endpointData(currentPage-1)
+    setCurrentPage(currentPage-1)
+  }
+  const handelPageIncrement= async()=>{
+    if(currentPage===totalPages){
+      return
+    }
+    endpointData(currentPage+1)
+    setCurrentPage(currentPage+1)
+  }
 
   const handleSearch = (input) => {
 
-    record.filter((i) => {
+    allEndpoint.filter((i) => {
       if (i.endpoint === input) {
         console.log(i);
         
@@ -141,14 +167,14 @@ const Endpoints = ({ infoClick ,ref}) => {
 
   useEffect(() => {
     console.log("hgfhgdtrdhtdy");
-    // if (endpointValue) {
-    // axios.get(`http://localhost:9002/v1/endpoints/count`)
-    // .then(response=>{
-    //   setTotalEndpoint(response.data)
-    // })
-    // .catch(error=>{
-    //   console.error(error)
-    // })
+    
+    axios.get(`http://localhost:9002/v1/endpoints`)
+    .then(response=>{
+      setallEndpoint(response.data)
+    })
+    .catch(error=>{
+      console.error(error)
+    })
     axios
       .get(`http://localhost:9002/v1/endpoints/${currentPage}`)
       .then((response) => {
@@ -188,30 +214,33 @@ const Endpoints = ({ infoClick ,ref}) => {
   return (
     <>
       <SearchBar header={"Endpoints"} onSearch={handleSearch} />
-      <div className="endpoints">
-        <div id="swagger-ui-container" className="swagger-wrap">
-          <button
+      
+      <div className="table-responsive " >
+      <button
             className="btn btn-success"
             id="add-endpoint"
             onClick={toggleModal}
           >
             Add Endpoint
           </button>
+        <div id="swagger-ui-container" className="swagger-wrap">
+         
           <ReactBootStrap.Table
-            striped
+            // striped
             bordered
             hover
-            className="table table-bordered "
+            
+            className="table table-sm table-bordered "
           >
-            <thead className="text-white">
+            <thead className=" text-white">
               <tr>
                 <th className="text-nowrap">Name</th>
                 <th className="text-nowrap">Method</th>
                 <th className="text-nowrap">Active </th>
                 <th className="text-nowrap">Description</th>
                 <th className="text-nowrap">File Path</th>
-                <th>Created At</th>
-                <th>Updated At</th>
+                {/* <th>Created At</th> */}
+                <th>Last Updated</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -220,21 +249,25 @@ const Endpoints = ({ infoClick ,ref}) => {
                 <tr key={recordList.id}>
                   <td className="text-nowrap">{recordList.endpoint}</td>
                   <td className="text-nowrap">{recordList.method}</td>
-                  <td className="text-nowrap">
+                  {/* <td className="text-nowrap">
                     {recordList.active ? (
-                      <text>Active</text>
+                      <text>True</text>
                     ) : (
-                      <text>InActive</text>
+                      <text>False</text>
                     )}
+                  </td> */}
+                  <td>
+                    <div >
+                    <ToggleSwitch  value={recordList.active} id={recordList.id}/></div>
                   </td>
                   <td className="text-nowrap"> {recordList.description}</td>
                   <td className="text-nowrap">
-                    {recordList.file_path
+                    {recordList.file_path.Valid
                       ? recordList.file_path.String.toString()
-                      : ""}
+                      : "-"}
                   </td>
-                  <td>{recordList.created_at.toString()}</td>
-                  <td>{recordList.updated_at.toString()}</td>
+                  {/* <td>{new Date(recordList.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
+                  <td>{new Date(recordList.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
                   <td>
                     <button
                       className="info-button"
@@ -266,11 +299,17 @@ const Endpoints = ({ infoClick ,ref}) => {
         </div>
       </div>
       <div className="pagination">
+      <button id="page-no"  onClick={() => handelPageDecrement()}>
+            &lt;
+          </button>
         {pageNumbers.map((number) => (
           <button id="page-no" key={number} onClick={() => handelPage(number)}>
             {number}
           </button>
         ))}
+        <button id="page-no"  onClick={() => handelPageIncrement()}>
+            &gt;
+          </button>
       </div>
 
       {/* { entry && <EndpointTable ref={tableRef} record ={entry} />}

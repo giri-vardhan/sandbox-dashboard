@@ -80,10 +80,7 @@ const UpdateEndpointPopUp = ({ onClose, record,onUpdate }) => {
     }
 
   };
-  useEffect((record)=>{
 
-  }
-  );
 console.log(isActive)
   return (
     // <div className="popup-background">
@@ -126,7 +123,7 @@ console.log(isActive)
                     File Path:
                     <br />
                     <input value={filePath} onChange={handleFilePathChange} />
-                    <span className="slider"></span>
+                    
                   </label>
                   <br />
                   <label>

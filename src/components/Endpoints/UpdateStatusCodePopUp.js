@@ -16,7 +16,7 @@ const UpdateStatusCodePopUp = ({ onClose, record, onUpdate }) => {
     setDescription(event.target.value);
   };
   const handleResponseChange = (event) => {
-    setResponseBody(JSON.stringify(event.target.value));
+    setResponseBody(event.target.value);
   };
   const handleIdentifierChange = (event) => {
     setIdentifier(event.target.value);
