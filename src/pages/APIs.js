@@ -3,9 +3,9 @@ import { Button } from 'react-bootstrap';
 import Endpoints from '../components/Endpoints/Endpoints';
 import EndpointTable from '../components/Endpoints/EndpointTable';
 import StatusCodeTable from '../components/Endpoints/StatusCodeTable';
-import Table from '../components/Endpoints/Table';
 import Footer from '../components/Footer/Footer';
 import backIcon from '../components/icons/back.png';
+import Status from './about.js';
 
 const APIs = () => {
   const [entry,setEntry] =useState();
@@ -38,7 +38,7 @@ const handleClickBack=()=>{
   setShowComponentA(false)
 }
   return (
-    <>
+    <div className='page'>
     {/* <div 
       // style={{
       //   display: 'flex',
@@ -77,27 +77,29 @@ const handleClickBack=()=>{
   </p>*/}
     {/* <Endpoints /> */}
     {showComponentA === true ? (
+      <div actiivesytle='true'>
+        <Status  handleClickBack={handleClickBack} entry={entry} result={result}/>
+      </div>
       
-      
-<div>
-<div className='endpointHeader'>
-<button className='backButton' onClick={handleClickBack}>
-      <img src={backIcon} alt="Back"/>
-    </button>
-    <h2 className='endpoint-header' >Endpoint</h2>{entry && <EndpointTable  record={entry} />}
+// {/* <div>
+// <div className='endpointHeader'>
+// <button className='backButton' onClick={handleClickBack}>
+//       <img src={backIcon} alt="Back"/>
+//     </button>
+//     <h2 className='endpoint-header' >Endpoint</h2>{entry && <EndpointTable  record={entry} />}
     
-    </div>
+//     </div>
     
-    {/* <button className='backButton' onClick={handleClickBack}>
-      <img src={backIcon} alt="Back"/>
-    </button> */}
-    { <div><h2 className='status-header'>Status Code Table</h2>  <StatusCodeTable record={result} endpoint={entry} /></div>}
-    </div>
+//     {/* <button className='backButton' onClick={handleClickBack}>
+//       <img src={backIcon} alt="Back"/>
+//     </button> */}
+//     { <div><h2 className='status-header'>Status Code Table</h2>  <StatusCodeTable record={result} endpoint={entry} /></div>}
+//     </div> */}
 ) : (
   <Endpoints infoClick={handleClickInfo} />
 )}
       {/* </div>  */}
-    </>
+      </div>
   );
 };
 

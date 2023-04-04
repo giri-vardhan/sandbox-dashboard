@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Popup from "./AddEndpointPopup";
 import * as ReactBootStrap from "react-bootstrap";
-import TablePopup from "./Table";
 import axios from "axios";
-import StatusCodeTable from "./StatusCodeTable";
 import SearchBar from "../Navbar/searchBar";
-import EndpointTable from "./EndpointTable";
-import { FaStar } from "react-icons/fa";
 import infoIcon from "../icons/info.png";
 import playIcon from "../icons/play.png";
 import ToggleSwitch from "./ToggleSwitch"
@@ -28,6 +24,7 @@ const Endpoints = ({ infoClick }) => {
   const [result, setResult] = useState();
   //const [endpointValue, setEndpointValue] = useState([]);
   const [selectedEndpoint, setSelectedEndpoxint] = useState(null);
+  const moment = require('moment-timezone');
 
   const handleAddEndpoint = () => {
     setEndpoints([...endpoints, { name: "New Endpoint" }]);
@@ -86,7 +83,7 @@ const Endpoints = ({ infoClick }) => {
       id:data.id,
       method:data.method,
       created_at:new Date().toLocaleTimeString(),
-      updated_at:new Date().toLocaleTimeString(),
+      updated_at:new Date(),
       deleted_at:{Time:null,Valid:false} 
     }
     setRecord((prevRecord) => prevRecord.concat(body));
@@ -250,11 +247,7 @@ const Endpoints = ({ infoClick }) => {
                   <td className="text-nowrap">{recordList.endpoint}</td>
                   <td className="text-nowrap">{recordList.method}</td>
                   {/* <td className="text-nowrap">
-                    {recordList.active ? (
-                      <text>True</text>
-                    ) : (
-                      <text>False</text>
-                    )}
+                   
                   </td> */}
                   <td>
                     <div >
@@ -264,10 +257,10 @@ const Endpoints = ({ infoClick }) => {
                   <td className="text-nowrap">
                     {recordList.file_path.Valid
                       ? recordList.file_path.String.toString()
-                      : "-"}
+                      : <h6 style={{fontSize:'20px'}}>-</h6>}
                   </td>
-                  {/* <td>{new Date(recordList.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
-                  <td>{new Date(recordList.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
+                  {/* <td>{moment.utc(recordList.updated_at).tz('Asia/Kolkata').format('HH:mm')}</td> */}
+                  <td>{new Date(recordList.updated_at).toUTCString()}</td>
                   <td>
                     <button
                       className="info-button"
@@ -283,7 +276,7 @@ const Endpoints = ({ infoClick }) => {
                       className="info-button"
                       style={{ marginRight: "0px" }}
                     >
-                      <img src={playIcon} alt="Run" border="0" />
+                      {/* <img src={playIcon} alt="Run" border="0" /> */}
                     </button>
                   </td>
                 </tr>
@@ -310,8 +303,10 @@ const Endpoints = ({ infoClick }) => {
         <button id="page-no"  onClick={() => handelPageIncrement()}>
             &gt;
           </button>
+          
       </div>
-
+      <div>
+          <h6 id="count">Record count is {record.length}/{totalEndpoint}</h6></div>
       {/* { entry && <EndpointTable ref={tableRef} record ={entry} />}
         {result && result.length && <StatusCodeTable record ={result} /> } */}
       {/* { record  && record.length && <DyanmicTable record = {record} />} */}

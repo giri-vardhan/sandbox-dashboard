@@ -3,7 +3,7 @@ import { Nav, NavLink,Bars,NavMenu,NavBtn, NavBtnLink } from './NavbarElements';
 import apiIcon from '../icons/api.png'
 import rightIcon from '../icons/right.png'
 import { Button } from 'bootstrap';
-
+import openIcon from '../icons/open.svg'
 
 const Navbar = () => { 
     const [toggleMenu,setToggle]=useState(false)
@@ -14,35 +14,39 @@ const Navbar = () => {
   return (
     <>{toggleMenu?<div className='slider' >
     <NavMenu style={{marginRight:'400px'}}>
-            
-            <NavLink to='/apis' actiivesytle='true'>
+    <NavLink className='open-icon-div'>
+                <img className='open-icon' src={openIcon} alt="Icon"></img>
+            </NavLink>
+            <NavLink to='/' actiivesytle='true'>
                 <div className='slider-div'>
                 <img className='slider-icon' src={apiIcon} alt="API"/>
-                <text className='slider-text'>APIs</text></div>
+                <h7 className='slider-text'>APIs</h7></div>
             </NavLink>
             
         </NavMenu>
-        <NavBtnLink onClick={handleToggle}>
+        <NavBtn onClick={handleToggle}>
         <div className='slider-right'>
             <img src={rightIcon} alt="Menu"/></div>
-        </NavBtnLink>
+        </NavBtn>
         <Bars/>
         
        
     </div>:<Nav >
-        <NavMenu style={{marginRight:'400px'}}>
-            
-                <NavLink to='/apis' actiivesytle='true'>
+        <NavMenu style={{marginRight:'400px',transition:'150ms'}}>
+        <NavLink className='open-icon-div'>
+                <img className='open-icon' src={openIcon} alt="Icon"></img>
+            </NavLink>
+                <NavLink to='/' actiivesytle='true'>
                     <div className='slider-div' style={{marginLeft:'-18px'}}>
                     <img className='slider-icon'src={apiIcon} alt="API"/></div>
                     
                 </NavLink>
                 
             </NavMenu>
-            <NavBtnLink onClick={handleToggle}>
+            <NavBtn onClick={handleToggle}>
             <div className='slider-right'>
                 <img src={rightIcon} alt="Menu"/></div>
-            </NavBtnLink>
+            </NavBtn>
             <Bars/>
             
            

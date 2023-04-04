@@ -3,7 +3,8 @@ import axios from 'axios';
 import copyIcon from '../icons/copy.png';
 import Popup from './AddStatusCodePopup';
 import SearchBar from '../Navbar/searchBar'
-
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 import editIcon from '../icons/edit.png';
 import deleteIcon from '../icons/delete.png';
@@ -60,7 +61,7 @@ const StatusCodeTable = (props) => {
         description:data.description,
         endpoint_id:data.endpoint_id,
         created_at:new Date().toLocaleTimeString(),
-        updated_at:new Date().toLocaleTimeString(),
+        updated_at:new Date(),
         deleted_at:{Time:null,Valid:false} 
       }
       if (record.status_code && record.status_code===400){
@@ -174,14 +175,15 @@ const StatusCodeTable = (props) => {
                 <td >{item.description?item.description:"-"}</td>
                 <td  id='copy-btn1'>
                 <div className='copy-btn-div'>
-                  <text className=''>{JSON.stringify(item.response_body) }</text>
+                  <p className=''>{JSON.stringify(item.response_body) }</p>
                   </div> <div className='copy-btn-div'>
                 <button className="copy-btn2" onClick={() => {
                   navigator.clipboard.writeText(JSON.stringify(item.response_body));}}>
                   <img src={copyIcon} alt="copy" border="0" /> 
                 </button></div></td>
                 {/* <td>{new Date(item.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
-                <td>{new Date(item.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
+                <td>
+                  {(new Date(item.updated_at)).toUTCString()}</td>
                 
                     {/* <ReactBootStrap.Button variant="primary" onClick={() => {handleUpdateButtonClick(item);toggleModalUpdate()}}><BsPencilSquare />{" "}</ReactBootStrap.Button> */}
                     <td >
@@ -213,7 +215,7 @@ const StatusCodeTable = (props) => {
     {entry && modalUpdate && <UpdateStatusCodePopUp onUpdate={handleUpdateClick} onClose={toggleModalUpdate} record={entry} />}
                 {entry && modalDelete && <DeleteStatusCodePopUp  onDelete={handleDeleteClick}onClose={toggleModalDelete} record={entry} />}
                 {modalAdd && <Popup  onData={addData} onClose={toggleModalAdd} endpoint={endpoint} />}
-     </div>
+  </div>
      
     );
 };

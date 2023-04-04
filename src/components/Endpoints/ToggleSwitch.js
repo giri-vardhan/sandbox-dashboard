@@ -6,9 +6,9 @@ import { type } from "@testing-library/user-event/dist/type";
 const ToggleSwitch = ({ value, id }) => {
   const [checked, setChecked] = useState(value.Bool);
   const handleChange = (val) => {
-    setChecked(val);
-    console.log(checked,val);
-    endpointActivate(val);
+    setChecked(!checked);
+    console.log(checked);
+    endpointActivate(!checked);
   };
   const endpointActivate = async (val) => {
     console.log(val, id,);
@@ -43,9 +43,12 @@ const ToggleSwitch = ({ value, id }) => {
 // });
   
 
-  return (
-    <ReactSwitch  className="toggle-switch" checked={checked}
-    onChange={handleChange}></ReactSwitch>
+  return (<>
+    {/* <ReactSwitch style={{height:'18px',width:'35px'}}  className="toggle-switch" checked={checked}
+    onChange={handleChange}></ReactSwitch> */}
+        <MDBSwitch style={{height:'18px',width:'35px'}}  id='flexSwitchCheckDefault' checked={checked}  onChange={handleChange}/>
+
+    </>
     // <label class="switch">
     //   <input  type="checkbox" value={checked} onChange={handleChange}/>
     //   <div class="toggleSlidder round"></div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as ReactBootStrap from "react-bootstrap";
 import StatusCodeTable from "./StatusCodeTable";
 import UpdateEndpointPopUp from "./UpdateEndpointPopUp";
@@ -8,7 +8,7 @@ import ToggleSwitch from "./ToggleSwitch"
 import SearchBar from "../Navbar/searchBar";
 import Popup from './AddStatusCodePopup';
 
-const EndpointTable = forwardRef((props) => {
+const EndpointTable = (props) => {
   const [record, setRecord] = useState(props.record);
   console.log("props recived", record);
   const [data, setData] = useState([]);
@@ -121,7 +121,7 @@ const EndpointTable = forwardRef((props) => {
                 {record.file_path.Valid? record.file_path.String.toString() : "-"}
               </td>
               {/* <td>{new Date(record.created_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td> */}
-              <td>{new Date(record.updated_at.toString()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</td>
+              <td>{new Date(record.updated_at.toString()).toUTCString()}</td>
               {/* <td>{record.deleted_at ? record.deleted_at.Time.toString() : ''}</td> */}
               {/* <td><ReactBootStrap.Button variant='primary' onClick={toggleModal}><BsPencilSquare />{" "}</ReactBootStrap.Button></td> */}
               <td id="edit-btn1">
@@ -184,7 +184,7 @@ const EndpointTable = forwardRef((props) => {
   //   <StatusCodeTable />
   //   </div>
   // );
-});
+};
 export default EndpointTable;
 
 // return(

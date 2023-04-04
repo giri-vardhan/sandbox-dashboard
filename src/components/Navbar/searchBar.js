@@ -16,15 +16,25 @@ const Searchbar=({header,onSearch})=>{
         }
         console.log(searchInput)
     }
+    const handleKey=(e)=>{
+        console.log(searchInput)
+        if(e.key==='Enter'){
+            console.log(searchInput)
+            searchValue()
+        }
+    }
+
     return(
         <><div className="search-bar-div">
             <h2 className="logo">{logo1}</h2>
-            <input className="searchBox" type="search" id="searchB" placeholder="Search here" onChange={handleChange}  value={searchInput} />
+            <input className="searchBox" type="search" id="searchB" placeholder="Search here" onKeyDown={handleKey} onChange={handleChange}  value={searchInput} />
             <Button className="searchIcon" id="searchIconID" onClick={searchValue}>
                 <img src={searchIcon} alt="search"/>
             </Button>
         </div>
+        
         </>
+        
     )
 }
 export default Searchbar
