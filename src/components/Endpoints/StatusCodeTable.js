@@ -8,7 +8,6 @@ import 'moment-timezone';
 
 import editIcon from '../icons/edit.png';
 import deleteIcon from '../icons/delete.png';
-import tickIcon from '../icons/doubleTick.png'
 import * as ReactBootStrap from 'react-bootstrap';
 import UpdateStatusCodePopUp from './UpdateStatusCodePopUp';
 import DeleteStatusCodePopUp from './DeleteStatusCodePopUp';
@@ -145,6 +144,8 @@ const StatusCodeTable = (props) => {
       <div>
         <div className='search-statusCode'>
       <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+      
+      <h2 className='status-header'>Status Code Table</h2>
       <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
      Add Status Code
     </button>
@@ -215,7 +216,7 @@ const StatusCodeTable = (props) => {
     {entry && modalUpdate && <UpdateStatusCodePopUp onUpdate={handleUpdateClick} onClose={toggleModalUpdate} record={entry} />}
                 {entry && modalDelete && <DeleteStatusCodePopUp  onDelete={handleDeleteClick}onClose={toggleModalDelete} record={entry} />}
                 {modalAdd && <Popup  onData={addData} onClose={toggleModalAdd} endpoint={endpoint} />}
-  </div>
+                </div>
      
     );
 };

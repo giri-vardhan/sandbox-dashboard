@@ -28,6 +28,9 @@ const ToggleSwitch = ({ value, id }) => {
         throw new Error("Network response was not ok.");
         //console.log(description);
       }
+      else{
+        
+      }
     } catch (error) {
       console.error(error);
     }

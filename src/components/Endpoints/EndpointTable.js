@@ -62,8 +62,8 @@ const EndpointTable = (props) => {
 
   return (
     <div>
-    <div className='search-statusCode'>
-    <SearchBar header={'Status Code'} onSearch={handleSearch}/></div>
+    {/* <div className='search-statusCode'>
+    <SearchBar header={'Status Code'} onSearch={handleSearch}/></div> */}
     {/* <button className="btn btn-success" id='add-Status' onClick={toggleModalAdd}>
      Add Status Code
     </button> */}

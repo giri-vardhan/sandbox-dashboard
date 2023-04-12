@@ -5,9 +5,11 @@ import axios from "axios";
 import SearchBar from "../Navbar/searchBar";
 import infoIcon from "../icons/info.png";
 import playIcon from "../icons/play.png";
-import ToggleSwitch from "./ToggleSwitch"
+import ToggleSwitch from "./ToggleSwitch";
+import { Link, useNavigate } from "react-router-dom";
 
 const Endpoints = ({ infoClick }) => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalEndpoint, setTotalEndpoint] = useState(0);
   const [allEndpoint, setallEndpoint] = useState([]);
@@ -24,7 +26,7 @@ const Endpoints = ({ infoClick }) => {
   const [result, setResult] = useState();
   //const [endpointValue, setEndpointValue] = useState([]);
   const [selectedEndpoint, setSelectedEndpoxint] = useState(null);
-  const moment = require('moment-timezone');
+  const moment = require("moment-timezone");
 
   const handleAddEndpoint = () => {
     setEndpoints([...endpoints, { name: "New Endpoint" }]);
@@ -75,19 +77,19 @@ const Endpoints = ({ infoClick }) => {
   };
   const addData = (data) => {
     console.log(data);
-    const body={
-      active:data.active,
-      description:data.description,
-      endpoint:data.endpoint,
-      file_path:data.file_path,
-      id:data.id,
-      method:data.method,
-      created_at:new Date().toLocaleTimeString(),
-      updated_at:new Date(),
-      deleted_at:{Time:null,Valid:false} 
-    }
+    const body = {
+      active: data.active,
+      description: data.description,
+      endpoint: data.endpoint,
+      file_path: data.file_path,
+      id: data.id,
+      method: data.method,
+      created_at: new Date().toLocaleTimeString(),
+      updated_at: new Date(),
+      deleted_at: { Time: null, Valid: false },
+    };
     setRecord((prevRecord) => prevRecord.concat(body));
-    setallEndpoint((prevData)=>prevData.concat(body))
+    setallEndpoint((prevData) => prevData.concat(body));
     setTotalEndpoint(totalEndpoint + 1);
   };
   // const tableRef = useRef(null);
@@ -113,7 +115,7 @@ const Endpoints = ({ infoClick }) => {
         const newData = response.data.Endpoint;
         // setRecord(newData);
         setRecord(newData);
-        setTotalEndpoint(response.data.Count)
+        setTotalEndpoint(response.data.Count);
         console.log("api response", response.data.Endpoint);
       })
       .catch((error) => {
@@ -135,27 +137,28 @@ const Endpoints = ({ infoClick }) => {
     endpointData(page);
     setCurrentPage(page);
   };
-  const handelPageDecrement= async()=>{
-    if(currentPage===1){
-      return
+  const handelPageDecrement = async () => {
+    if (currentPage === 1) {
+      return;
     }
-    endpointData(currentPage-1)
-    setCurrentPage(currentPage-1)
-  }
-  const handelPageIncrement= async()=>{
-    if(currentPage===totalPages){
-      return
+    endpointData(currentPage - 1);
+    setCurrentPage(currentPage - 1);
+  };
+  const handelPageIncrement = async () => {
+    console.log(currentPage, totalPages);
+    if (currentPage === totalPages) {
+      return;
     }
-    endpointData(currentPage+1)
-    setCurrentPage(currentPage+1)
-  }
+
+    endpointData(currentPage + 1);
+    setCurrentPage(currentPage + 1);
+  };
 
   const handleSearch = (input) => {
-
     allEndpoint.filter((i) => {
       if (i.endpoint === input) {
         console.log(i);
-        
+
         handleInfoButtonClick(i);
         return;
       }
@@ -164,14 +167,15 @@ const Endpoints = ({ infoClick }) => {
 
   useEffect(() => {
     console.log("hgfhgdtrdhtdy");
-    
-    axios.get(`http://localhost:9002/v1/endpoints`)
-    .then(response=>{
-      setallEndpoint(response.data)
-    })
-    .catch(error=>{
-      console.error(error)
-    })
+
+    axios
+      .get(`http://localhost:9002/v1/endpoints`)
+      .then((response) => {
+        setallEndpoint(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     axios
       .get(`http://localhost:9002/v1/endpoints/${currentPage}`)
       .then((response) => {
@@ -211,22 +215,20 @@ const Endpoints = ({ infoClick }) => {
   return (
     <>
       <SearchBar header={"Endpoints"} onSearch={handleSearch} />
-      
-      <div className="table-responsive " >
-      <button
-            className="btn btn-success"
-            id="add-endpoint"
-            onClick={toggleModal}
-          >
-            Add Endpoint
-          </button>
+
+      <div className="table-responsive ">
+        <button
+          className="btn btn-success"
+          id="add-endpoint"
+          onClick={toggleModal}
+        >
+          Add Endpoint
+        </button>
         <div id="swagger-ui-container" className="swagger-wrap">
-         
           <ReactBootStrap.Table
             // striped
             bordered
             hover
-            
             className="table table-sm table-bordered "
           >
             <thead className=" text-white">
@@ -250,28 +252,36 @@ const Endpoints = ({ infoClick }) => {
                    
                   </td> */}
                   <td>
-                    <div >
-                    <ToggleSwitch  value={recordList.active} id={recordList.id}/></div>
+                    <div>
+                      <ToggleSwitch
+                        value={recordList.active}
+                        id={recordList.id}
+                      />
+                    </div>
                   </td>
                   <td className="text-nowrap"> {recordList.description}</td>
                   <td className="text-nowrap">
-                    {recordList.file_path.Valid
-                      ? recordList.file_path.String.toString()
-                      : <h6 style={{fontSize:'20px'}}>-</h6>}
+                    {recordList.file_path.Valid ? (
+                      recordList.file_path.String.toString()
+                    ) : (
+                      <h6 style={{ fontSize: "20px" }}>-</h6>
+                    )}
                   </td>
                   {/* <td>{moment.utc(recordList.updated_at).tz('Asia/Kolkata').format('HH:mm')}</td> */}
                   <td>{new Date(recordList.updated_at).toUTCString()}</td>
                   <td>
-                    <button
-                      className="info-button"
-                      onClick={() => {
-                        handleInfoButtonClick(recordList);
-                        handleScrollClick();
-                      }}
-                    >
-                      <img src={infoIcon} alt="Info" border="0" />
-                      {/* <span className="tooltiptext">{recordList.endpoint}</span> */}
-                    </button>
+                    <Link to="/status">
+                      <button
+                        className="info-button"
+                        onClick={() => {
+                          handleInfoButtonClick(recordList);
+                          handleScrollClick();
+                        }}
+                      >
+                        <img src={infoIcon} alt="Info" border="0"></img>
+                        {/* <span className="tooltiptext">{recordList.endpoint}</span> */}
+                      </button>
+                    </Link>
                     <button
                       className="info-button"
                       style={{ marginRight: "0px" }}
@@ -291,22 +301,31 @@ const Endpoints = ({ infoClick }) => {
       {showTable && <TablePopup onClose={handleTableClose} />} */}
         </div>
       </div>
-      <div className="pagination">
-      <button id="page-no"  onClick={() => handelPageDecrement()}>
+      <div className="pagination ">
+        {currentPage > 1 && (
+          <button id="page-no" onClick={() => handelPageDecrement()}>
             &lt;
           </button>
-        {pageNumbers.map((number) => (
-          <button id="page-no" key={number} onClick={() => handelPage(number)}>
-            {number}
-          </button>
-        ))}
-        <button id="page-no"  onClick={() => handelPageIncrement()}>
+        )}
+        {pageNumbers.map((number) => (<>
+          {number === currentPage ?(<button id="current-page" key={number} onClick={() => handelPage(number)}>
+          {number}
+        </button>):<button id="page-no" key={number} onClick={() => handelPage(number)}>
+        {number}
+      </button>}
+          
+       </> ))}
+        {currentPage !== totalPages && (
+          <button id="page-no" onClick={() => handelPageIncrement()}>
             &gt;
           </button>
-          
+        )}
       </div>
       <div>
-          <h6 id="count">Record count is {record.length}/{totalEndpoint}</h6></div>
+        <h6 id="count">
+          Record count is {record.length}/{totalEndpoint}
+        </h6>
+      </div>
       {/* { entry && <EndpointTable ref={tableRef} record ={entry} />}
         {result && result.length && <StatusCodeTable record ={result} /> } */}
       {/* { record  && record.length && <DyanmicTable record = {record} />} */}

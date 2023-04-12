@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { Button } from "react-bootstrap";
+import { Button, NavLink } from "react-bootstrap";
 import searchIcon from '../icons/search.png'
+import openIcon from '../icons/open.svg'
 
 const Searchbar=({header,onSearch})=>{
     const [logo1,setLogo]=useState(header)
@@ -26,11 +27,15 @@ const Searchbar=({header,onSearch})=>{
 
     return(
         <><div className="search-bar-div">
-            <h2 className="logo">{logo1}</h2>
+            <NavLink className='open-icon-div'>
+                <img className='open-icon-SB' src={openIcon} alt="Icon"></img>
+            </NavLink>
+            <h3 className="logo">{logo1}</h3>
             <input className="searchBox" type="search" id="searchB" placeholder="Search here" onKeyDown={handleKey} onChange={handleChange}  value={searchInput} />
             <Button className="searchIcon" id="searchIconID" onClick={searchValue}>
-                <img src={searchIcon} alt="search"/>
+                <img className="searchImg" src={searchIcon} alt="search"/>
             </Button>
+            <i className="fas fa-cog"></i> 
         </div>
         
         </>
