@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages';
-import About from './pages/about';
+import Status from './pages/status';
 import APIs from './pages/APIs'
-import Contact from './pages/contact';
-import SignUp from './pages/signup';
-
+import Login from './pages/login'
 
 function App() {
+  const [isLog,setIsLog]=useState(false)
+  const [userDetails,setUserDetails]=useState([])
+  const handleLogIn=(state)=>{
+    setIsLog(state)
+  }
+  const handleUserData=(data)=>{
+    setUserDetails(data)
+  }
   return (
   <>
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path='/' exact element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/apis' element={<APIs />} />
-        <Route path='/contact-us' element={<Contact />} />
-        <Route path='/sign-up' element={<SignUp />}/>
+      <Routes>   
+         <Route path='/' exact element={<Login auth={handleLogIn} userDetails={handleUserData}/>} />
+         <Route path='/apis' element={<APIs auth={handleLogIn} isLog={isLog} userData={userDetails}/>}/>
+        <Route path='/status'  element={<APIs  auth={handleLogIn} isLog={isLog} userData={userDetails}/>} />          
       </Routes>
-    </Router>
-   
   </>
   );
 }
-
 export default App; 

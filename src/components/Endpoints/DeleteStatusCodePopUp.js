@@ -3,14 +3,9 @@ import axios from 'axios';
 import { on } from 'events';
 
 
-const DeleteStatusCodePopUp = ({ onClose, record }) =>  {  
-  console.log(record)
+const DeleteStatusCodePopUp = ({ onClose, record,onDelete }) =>  {  
   const [data,setData] = useState([])
   const [responseDelete,setResponseDELETE]= useState('')
-    console.log(record);
-
-  
-
     const handleSubmitDELETE = async (e) => {
         e.preventDefault();
         try {
@@ -18,8 +13,15 @@ const DeleteStatusCodePopUp = ({ onClose, record }) =>  {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
           });
+          if (res.ok){
+            onClose()
+            onDelete(record.id)
+          }
+          else{
+            throw new Error('Network response was not ok.');
+
+          }
             const data = await res.json();
-            console.log(data);
             setResponseDELETE(JSON.stringify(data));
       }catch (error) { 
         console.error(error);

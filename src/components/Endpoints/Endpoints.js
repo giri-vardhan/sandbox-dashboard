@@ -1,164 +1,279 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Popup from './AddEndpointPopup';
-import TablePopup from './Table';
-import axios from 'axios';
-import StatusCodeTable from './StatusCodeTable';
-import EndpointTable from './EndpointTable';
-import { FaStar } from 'react-icons/fa';
-import downIcon from '../icons/down.png';
+import React, { useState, useEffect, useRef } from "react";
+import Popup from "./AddEndpointPopup";
+import * as ReactBootStrap from "react-bootstrap";
+import axios from "axios";
+import SearchBar from "../Navbar/searchBar";
+import infoIcon from "../icons/info.png";
+import playIcon from "../icons/play.png";
+import ToggleSwitch from "./ToggleSwitch";
+import { Link, useNavigate } from "react-router-dom";
 
-const Endpoints = () => {
+const Endpoints = ({ infoClick, userData, auth }) => {
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalEndpoint, setTotalEndpoint] = useState(0);
+  const [allEndpoint, setallEndpoint] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [endpoints, setEndpoints] = useState([]);
   const [modal, setModal] = useState(false);
-  const [tableData, setTableData] = useState()
+  const [tableData, setTableData] = useState();
   const [showTable, setShowTable] = useState(false);
-  const [record,setRecord] = useState([]);
+  const [record, setRecord] = useState([]);
   const [buttonClick, setButtonClick] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-  const [obj,setObj]=useState({});
-  const [entry,setEntry] =useState();
-  const [result,setResult] =useState();
-  //const [endpointValue, setEndpointValue] = useState([]);
-  const [endpointData, setEndpointData] = useState([]);
-  const [selectedEndpoint, setSelectedEndpoint] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [obj, setObj] = useState({});
+  const [entry, setEntry] = useState();
+  const [result, setResult] = useState();
+  const [selectedEndpoint, setSelectedEndpoxint] = useState(null);
+  const moment = require("moment-timezone");
 
   const handleAddEndpoint = () => {
-    setEndpoints([...endpoints, { name: 'New Endpoint' }]);
+    setEndpoints([...endpoints, { name: "New Endpoint" }]);
   };
 
   const toggleModal = () => {
-    setModal(!modal)
+    setModal(!modal);
+  };
+  async function fetchStatusCode(value) {
+    const url = `http://localhost:9002/v1/status-codes/${value.id}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      infoClick(value, data);
+      return data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
-
-  const handleButtonClick = (value) =>{
-    console.log(value);
+  async function callStatusApi(value) {
+    const data = await fetchStatusCode(value);
+    return data;
+  }
+  const handleInfoButtonClick = (value) => {
     setSearchValue(value.id);
-    console.log(searchValue);
-    setEntry(value)
-    var url=`http://localhost:9002/v1/status-codes/${value.id}`
-        console.log("here statuscode",record);
-            console.log("xyz",url)
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    setResult(data);
-                  console.log(data);
-                })
-                .catch(error => console.error(error));
-    //setButtonClick(!buttonClick);
+    setEntry(value);
+    const data = callStatusApi(value);
+    setResult(data);
     setObj(value);
-  //  console.log("obj",setObj);
-  }
+
+  };
 
   const tableRef = useRef(null);
   const handleScrollClick = () => {
-    // scroll to the target element
-    // targetRef.current.scrollIntoView({ behavior: 'smooth' });
-    const element= document.getElementById('endpoint-table');
-    if (element){
-      element.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById("endpoint-table");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const addData = (data) => {
+    const body = {
+      active: data.active,
+      description: data.description,
+      endpoint: data.endpoint,
+      file_path: data.file_path,
+      id: data.id,
+      method: data.method,
+      created_at: new Date().toLocaleTimeString(),
+      updated_at: new Date(),
+      deleted_at: { Time: null, Valid: false },
+    };
+    setRecord((prevRecord) => prevRecord.concat(body));
+    setallEndpoint((prevData) => prevData.concat(body));
+    setTotalEndpoint(totalEndpoint + 1);
+  };
+  const endpointData = async (page) => {
+    await axios
+      .get(`http://localhost:9002/v1/endpoints/${page}`)
+      .then((response) => {
+        const newData = response.data.Endpoint;
+        setRecord(newData);
+        setTotalEndpoint(response.data.Count);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  // const tableRef = useRef(null);
-  // const handleScrollClick = () => {
-  //   tableRef.current.scrollIntoView({ behavior: "smooth" });
-  // };
+  const pageNumbers = [];
+  const totalPages = Math.ceil(totalEndpoint / itemsPerPage);
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
+  const handelPage = async (page) => {
+    endpointData(page);
+    setCurrentPage(page);
+  };
+  const handelPageDecrement = async () => {
+    if (currentPage === 1) {
+      return;
+    }
+    endpointData(currentPage - 1);
+    setCurrentPage(currentPage - 1);
+  };
+  const handelPageIncrement = async () => {
+    if (currentPage === totalPages) {
+      return;
+    }
 
- 
-  
+    endpointData(currentPage + 1);
+    setCurrentPage(currentPage + 1);
+  };
 
-//   const getEndpoints = async () => {
-//     try {
-//       const response = await fetch('http://localhost:9002/v1/endpoints');
-//       const data = await response.json();
-//       setEndpoints(data);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-//   getEndpoints();
+  const handleSearch = (input) => {
+    allEndpoint.filter((i) => {
+      if (i.endpoint === input) {
 
-useEffect(() => {
-    console.log("hgfhgdtrdhtdy")
-    // if (endpointValue) {
-      axios.get(`http://localhost:9002/v1/endpoints`)
-        .then(response => {
-          setRecord(response.data);
-          console.log("fyfvhfvhhgvhyg")
-          console.log('api response' , response.data)
-        })
-        .catch(error => {
-          console.error(error);
-        });
-   // }
+        handleInfoButtonClick(i);
+        return;
+      }
+    });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9002/v1/endpoints`)
+      .then((response) => {
+        setallEndpoint(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    axios
+      .get(`http://localhost:9002/v1/endpoints/${currentPage}`)
+      .then((response) => {
+        setTotalEndpoint(response.data.Count);
+        setRecord(response.data.Endpoint);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    // }
   }, []);
-  
- console.log("Record:", record); 
-
-//   const handleTableClick = (value) => {
-//     console.log("value",value);
-//     setButtonClick(true);
-    // { record  && record.length && <DyanmicTable record = {value} />}
-    // console.log(endpointList.endpoint)
-    // axios.get(`http://localhost:9002/v1/endpoints?endpoint=${endpointList.endpoint}`)
-    //   .then(response => {
-    //     setEndpointData(response.data);
-    //      setModal(true);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
- // };
-
-// const handleTableClick = (endpointList) => {
-    
-//     const endpointValue = endpointList.endpoint;
-//     setEndpointValue(endpointValue);
-//   };
-
-
   return (
     <>
-    <div className='endpoints'>
-      <h2>Endpoints List</h2>
-      <div id="swagger-ui-container" className='swagger-wrap'>
-      <ul>
-        <li>
-      {record.map(recordList => (
+      <SearchBar
+        header={"Endpoints"}
+        onSearch={handleSearch}
+        userData={userData}
+        auth={auth}
+      />
 
-        <div key={recordList.id} className="endpoint-list-links">
-           <div className='endpoint-link'>
-            
-              <button className='endpoint-method'>{recordList.method}</button>
-              <a href='#!' >
-                <h6 >{recordList.endpoint}</h6>
-                {/* <button>info</button> */}
-              </a>
-            
-              <button className="info-button" onClick={() => {handleButtonClick(recordList); handleScrollClick() }}>
-              <img src={downIcon}alt="Info" border="0" />
-            {/* <span className="tooltiptext">{recordList.endpoint}</span> */}
-            </button>
-            
-            {/* <TablePopup endpointValue={endpointValue} /> */}
-            </div>
+      <div className="table-responsive ">
+        <button
+          className="btn btn-success"
+          id="add-endpoint"
+          onClick={toggleModal}
+        >
+          Add Endpoint
+        </button>
+        <div id="swagger-ui-container" className="swagger-wrap">
+          <ReactBootStrap.Table
+            bordered
+            hover
+            className="table table-sm table-bordered "
+          >
+            <thead className=" text-white">
+              <tr>
+                <th className="text-nowrap">Name</th>
+                <th className="text-nowrap">Method</th>
+                <th className="text-nowrap">Active </th>
+                <th className="text-nowrap">Description</th>
+                <th className="text-nowrap">File Path</th>
+                <th>Last Updated</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {record.map((recordList) => (
+                <tr key={recordList.id}>
+                  <td className="text-nowrap">{recordList.endpoint}</td>
+                  <td className="text-nowrap">{recordList.method}</td>
+                  <td>
+                    <div>
+                      <ToggleSwitch
+                        value={recordList.active}
+                        id={recordList.id}
+                      />
+                    </div>
+                  </td>
+                  <td className="text-nowrap"> {recordList.description}</td>
+                  <td className="text-nowrap">
+                    {recordList.file_path.Valid ? (
+                      recordList.file_path.String.toString()
+                    ) : (
+                      <h6 style={{ fontSize: "20px" }}>-</h6>
+                    )}
+                  </td>
+                  <td>{new Date(recordList.updated_at).toUTCString()}</td>
+                  <td>
+                    <Link to="/status">
+                      <button
+                        className="info-button"
+                        onClick={() => {
+                          handleInfoButtonClick(recordList);
+                          handleScrollClick();
+                        }}
+                      >
+                        <img src={infoIcon} alt="Info" border="0"></img>
+                      </button>
+                    </Link>
+                    <button
+                      className="info-button"
+                      style={{ marginRight: "0px" }}
+                    >
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </ReactBootStrap.Table>
+
+          {modal && <Popup onData={addData} onClose={toggleModal} />}
+          <br />
+          <br />
+        
         </div>
-      ))}
-      
-      <button className="btn btn-success" onClick={toggleModal}>Add Endpoint</button>
-      {modal && <Popup  onClose={toggleModal} />}
-      <br /><br />
-      {/* <button className="showTableBtn" onClick={handleTableOpen}>Show Table</button>
-      {showTable && <TablePopup onClose={handleTableClose} />} */}
-          </li>
-      </ul>
       </div>
-    </div>
-        { entry && <EndpointTable ref={tableRef} record ={entry} />}
-        {result && result.length && <StatusCodeTable record ={result} /> }
-        {/* { record  && record.length && <DyanmicTable record = {record} />} */}
+      <div className="pagination ">
+        {currentPage > 1 && (
+          <button id="page-no" onClick={() => handelPageDecrement()}>
+            &lt;
+          </button>
+        )}
+        {pageNumbers.map((number) => (
+          <div key={number}>
+            {number === currentPage ? (
+              <button
+                id="current-page"
+                key={number}
+                onClick={() => handelPage(number)}
+              >
+                {number}
+              </button>
+            ) : (
+              <button
+                id="page-no"
+                key={number}
+                onClick={() => handelPage(number)}
+              >
+                {number}
+              </button>
+            )}
+          </div>
+        ))}
+        {currentPage !== totalPages && (
+          <button id="page-no" onClick={() => handelPageIncrement()}>
+            &gt;
+          </button>
+        )}
+      </div>
+      <div>
+        <h6 id="count">
+          Record count is {record.length}/{totalEndpoint}
+        </h6>
+      </div>
     </>
   );
 };
