@@ -7,10 +7,11 @@ import APIs from "./APIs";
 import openLogo from "../components/icons/open.svg"
 
 
-const Login=({auth})=>{
+const Login=({auth,userDetails})=>{
     const [userId,setUserId]=useState('')
     const [password,setPassword]=useState('')
     const navigate = useNavigate();
+    
     const [inValidUser,setInvalidUser]=useState(false)
     const handleUserIdChange =(event)=>{
         setUserId(event.target.value)
@@ -20,7 +21,6 @@ const Login=({auth})=>{
     }
     const handleSubmit=(event)=>{
         event.preventDefault()
-        console.log("submit")
         if(userId!=="" && password!==""){
             getToken(userId)
         }
@@ -29,13 +29,11 @@ const Login=({auth})=>{
         }
     }
     const getToken=async (name)=>{
-        console.log(name)
         const requestBody={
             user_id:userId,
             password:password, 
         }
         try{
-            console.log(requestBody)
             const response = await fetch(`http://localhost:9002/u1/user/validate`,{
                 method:'POST',
                 headers: {
@@ -43,12 +41,13 @@ const Login=({auth})=>{
                   },
                   body: JSON.stringify(requestBody),
             });
-            console.log(response.status)
             if(response.ok && response.status===200){
                 auth(true)
                 setInvalidUser(false)
                 navigate('/apis')
-                console.log(response)
+                const data = await response.json();
+
+                userDetails(data)
             }
             else{
                 setInvalidUser(true)

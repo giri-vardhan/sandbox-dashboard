@@ -4,7 +4,6 @@ import { on } from "events";
 import { json } from "react-router-dom";
 
 const UpdateStatusCodePopUp = ({ onClose, record, onUpdate }) => {
-  console.log(record);
   const [description, setDescription] = useState(record.description);
   const [statusCode, setStatusCode] = useState(record.status_code);
   const [identifier, setIdentifier] = useState(record.status_code_identifier);
@@ -23,19 +22,16 @@ const UpdateStatusCodePopUp = ({ onClose, record, onUpdate }) => {
   };
   const handleStatusCodeChange = (event) => {
     setStatusCode(event.target.value);
-    console.log(statusCode);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(record);
     const requestBody = {
       status_code: parseInt(statusCode),
       status_code_identifier: identifier,
       description: description,
       response_body: JSON.parse(responseBody),
     };
-    console.log(requestBody);
     try {
       const response = await fetch(
         `http://localhost:9002/v1/status-codes/${record.id}`,
@@ -47,15 +43,12 @@ const UpdateStatusCodePopUp = ({ onClose, record, onUpdate }) => {
           body: JSON.stringify(requestBody),
         }
       );
-      //console.log(description);
       if (response.ok) {
         onClose();
-        console.log(description);
         const body = await response.json();
         onUpdate(body);
       } else {
         throw new Error("Network response was not ok.");
-        //console.log(description);
       }
     } catch (error) {
       console.error(error);
@@ -63,74 +56,69 @@ const UpdateStatusCodePopUp = ({ onClose, record, onUpdate }) => {
   };
 
   return (
-    // <div className="popup-background" style={{  backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
-      <div className="popup-container" >
-        <div className="popup-content">
-          <div className="titleCloseBtn">
-            <button onClick={onClose} id="close-btn">
-              X
+    <div className="popup-container">
+      <div className="popup-content">
+        <div className="titleCloseBtn">
+          <button onClick={onClose} id="close-btn">
+            X
+          </button>
+        </div>
+        <h2>Update</h2>
+        <form onSubmit={handleSubmit} className="popup-element">
+          <label>
+            Status Code:
+            <br />
+            <input
+              id="input-id"
+              type="number"
+              value={statusCode}
+              onChange={handleStatusCodeChange}
+            />
+          </label>
+          <br />
+          <label>
+            Status Code Identifier:
+            <b/>
+            <input id="input-id"
+              name="identifier"
+              value={identifier}
+              onChange={handleIdentifierChange}
+              style={{ width: "500px" }}
+            />
+          </label>
+          <br />
+          <label>
+            Description:
+            <br />
+            <input id="input-id"
+              value={description}
+              onChange={handleDescriptionChange}
+              style={{ width: "500px" }}
+            />
+          </label>
+          <br />
+          <label>
+            Response Body:
+            <br />
+            <textarea
+              value={responseBody}
+              onChange={handleResponseChange}
+              rows="4"
+              cols="60"
+            />
+          </label>
+          <br />
+          <div className="popup-footer">
+            <button type="submit" className="btn btn-primary">
+              Add
+            </button>
+            <button type="button" className="btn btn-danger" onClick={onClose}>
+              Cancel
             </button>
           </div>
-          <h2>Update</h2>
-          <form onSubmit={handleSubmit} className="popup-element">
-            <label>
-              Status Code:
-              <br />
-              <input
-                type="number"
-                value={statusCode}
-                onChange={handleStatusCodeChange}
-              />
-            </label>
-            <br />
-            <label>
-              Status Code Identifier:
-              <br />
-              <input
-                name="identifier"
-                value={identifier}
-                onChange={handleIdentifierChange}
-                style={{ width: "500px" }}
-              />
-            </label>
-            <br />
-            <label>
-              Description:
-              <br />
-              <input
-                value={description}
-                onChange={handleDescriptionChange}
-                style={{ width: "500px" }}
-              />
-            </label>
-            <br />
-            <label>
-              Response Body:
-              <br />
-              <textarea
-                value={responseBody}
-                onChange={handleResponseChange}
-                rows="4"
-                cols="60"
-              />
-            </label>
-            <br />
-            <div className="popup-footer">
-              <button type="submit" className="btn btn-primary">
-                Add
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={onClose}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+        </form>
       </div>
-    // </div>
+    </div>
   );
 };
 export default UpdateStatusCodePopUp;

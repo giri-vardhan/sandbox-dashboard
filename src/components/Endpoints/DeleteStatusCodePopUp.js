@@ -4,13 +4,8 @@ import { on } from 'events';
 
 
 const DeleteStatusCodePopUp = ({ onClose, record,onDelete }) =>  {  
-  console.log(record)
   const [data,setData] = useState([])
   const [responseDelete,setResponseDELETE]= useState('')
-    console.log(record);
-
-  
-
     const handleSubmitDELETE = async (e) => {
         e.preventDefault();
         try {
@@ -27,7 +22,6 @@ const DeleteStatusCodePopUp = ({ onClose, record,onDelete }) =>  {
 
           }
             const data = await res.json();
-            console.log(data);
             setResponseDELETE(JSON.stringify(data));
       }catch (error) { 
         console.error(error);
