@@ -49,7 +49,7 @@ const Searchbar = ({ header, onSearch,userData,auth}) => {
   return (
     <>
       <div className="search-bar-div">
-        <NavLink className="open-icon-div">
+        <NavLink href="https://open.money/" className="open-icon-div">
           <img className="open-icon-SB" src={openIcon} alt="Icon"></img>
         </NavLink>
         <h3 className="logo">{logo1}</h3>
