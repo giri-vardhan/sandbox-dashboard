@@ -56,7 +56,7 @@ const Endpoints = ({ infoClick, userData, auth }) => {
     const data = callStatusApi(value);
     setResult(data);
     setObj(value);
-
+    navigate("/status")
   };
 
   const tableRef = useRef(null);
