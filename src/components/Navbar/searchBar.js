@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 const Searchbar = ({ header, onSearch,userData,auth}) => {
     const navigate = useNavigate();
   const [logo1, setLogo] = useState(header);
+  const [isFlip,setIsFlip]=useState(false)
   const [searchInput, setSearchInput] = useState("");
   const [profileToggle,setProfileToggle]=useState(false)
   const handleChange = (event) => {
@@ -38,13 +39,17 @@ const Searchbar = ({ header, onSearch,userData,auth}) => {
     }
   };
   const handleProfile=()=>{
+    setIsFlip(true);
+    setTimeout(() => {
+      setIsFlip(false);
+    }, 500);
     setProfileToggle(!profileToggle)
   }
 
   return (
     <>
       <div className="search-bar-div">
-        <NavLink className="open-icon-div">
+        <NavLink href="https://open.money/" className="open-icon-div">
           <img className="open-icon-SB" src={openIcon} alt="Icon"></img>
         </NavLink>
         <h3 className="logo">{logo1}</h3>
@@ -61,7 +66,7 @@ const Searchbar = ({ header, onSearch,userData,auth}) => {
           <img className="searchImg" src={searchIcon} alt="search" />
         </Button>
         <div className="menu-div">
-        <FontAwesomeIcon icon={faUser} className='profile-search-icon' onClick={handleProfile} />
+        <FontAwesomeIcon icon={faUser} flip={isFlip} className='profile-search-icon' onClick={handleProfile} />
         <DropdownButton id="dropdown-item-button" className="dropdown"  title={ <i className="fas fa-cog"/>}>
       <Dropdown.Item as="button"  onClick={handleLogout}>
       <FontAwesomeIcon icon={faArrowRightFromBracket} className="sign-out-icon" />

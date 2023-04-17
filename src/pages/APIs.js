@@ -34,7 +34,7 @@ const APIs = ({ isLog, auth,userData}) => {
   });
   const handleClickBack = () => {
     setShowComponentA(false);
-    navigate(-1);
+    navigate("/apis");
   };
   const handleClickApiIcon = () => {
     setShowComponentA(false);
